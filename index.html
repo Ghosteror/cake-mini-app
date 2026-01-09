@@ -406,10 +406,10 @@
         // Инициализация количеств
         products.forEach(p => order.quantities[p.id] = 0);
 
-        // Установка минимальной даты (завтра)
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        document.getElementById('first-delivery').min = tomorrow.toISOString().split('T')[0];
+        // Установка минимальной даты (через 2 дня)
+        const minDate = new Date();
+        minDate.setDate(minDate.getDate() + 2);
+        document.getElementById('first-delivery').min = minDate.toISOString().split('T')[0];
 
         // Рендер продуктов
         function renderProducts() {
