@@ -90,22 +90,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .product-name {
             font-weight: 600;
             font-size: 15px;
-        }
-
-        .product-emoji {
-            font-size: 24px;
-        }
-
-        .product-desc {
-            font-size: 13px;
-            color: var(--tg-theme-hint-color, #999);
-            margin-bottom: 10px;
         }
 
         /* Счётчик количества */
@@ -147,31 +137,6 @@
             margin-left: auto;
         }
 
-        /* Выбор дней недели */
-        .days-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            margin-bottom: 20px;
-        }
-
-        .day-btn {
-            padding: 10px 4px;
-            border: 2px solid var(--tg-theme-button-color, #3390ec);
-            background: transparent;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--tg-theme-button-color, #3390ec);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .day-btn.selected {
-            background: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #ffffff);
-        }
-
         /* Контактная информация */
         .input-group {
             margin-bottom: 14px;
@@ -184,6 +149,10 @@
             margin-bottom: 6px;
         }
 
+        .input-group label .required {
+            color: #e53935;
+        }
+
         .input-group input, .input-group textarea {
             width: 100%;
             padding: 12px;
@@ -192,6 +161,10 @@
             font-size: 16px;
             background: var(--tg-theme-secondary-bg-color, #f5f5f5);
             color: var(--tg-theme-text-color, #000);
+        }
+
+        .input-group input.error {
+            border-color: #e53935;
         }
 
         .input-group textarea {
@@ -228,9 +201,6 @@
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             cursor: pointer;
             transition: transform 0.2s;
         }
@@ -239,12 +209,63 @@
             transform: scale(0.98);
         }
 
-        .retail-card span {
-            font-size: 24px;
-        }
-
         .hidden {
             display: none !important;
+        }
+
+        /* Календарь */
+        .date-section {
+            margin-bottom: 20px;
+        }
+
+        .date-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            border-radius: 10px;
+            font-size: 16px;
+            background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #000);
+            margin-bottom: 12px;
+        }
+
+        .date-input.error {
+            border-color: #e53935;
+        }
+
+        /* Дни недели для регулярных поставок */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+
+        .day-btn {
+            padding: 10px 4px;
+            border: 2px solid var(--tg-theme-button-color, #3390ec);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--tg-theme-button-color, #3390ec);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .day-btn.selected {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        .error-message {
+            color: #e53935;
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
         }
     </style>
 </head>
@@ -270,36 +291,48 @@
                 <!-- Продукты будут добавлены через JS -->
             </div>
 
-            <h2>Дни доставки</h2>
-            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 12px;">
-                Выберите дни недели для поставки
-            </p>
-            <div class="days-grid">
-                <button class="day-btn" data-day="пн" onclick="toggleDay(this)">Пн</button>
-                <button class="day-btn" data-day="вт" onclick="toggleDay(this)">Вт</button>
-                <button class="day-btn" data-day="ср" onclick="toggleDay(this)">Ср</button>
-                <button class="day-btn" data-day="чт" onclick="toggleDay(this)">Чт</button>
-                <button class="day-btn" data-day="пт" onclick="toggleDay(this)">Пт</button>
-                <button class="day-btn" data-day="сб" onclick="toggleDay(this)">Сб</button>
-                <button class="day-btn" data-day="вс" onclick="toggleDay(this)">Вс</button>
+            <h2>Даты поставки</h2>
+
+            <div class="date-section">
+                <div class="input-group">
+                    <label>Первая поставка <span class="required">*</span></label>
+                    <input type="date" id="first-delivery" class="date-input" min="">
+                </div>
+
+                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 12px;">
+                    Регулярные дни поставок:
+                </p>
+                <div class="days-grid">
+                    <button class="day-btn" data-day="пн" onclick="toggleDay(this)">Пн</button>
+                    <button class="day-btn" data-day="вт" onclick="toggleDay(this)">Вт</button>
+                    <button class="day-btn" data-day="ср" onclick="toggleDay(this)">Ср</button>
+                    <button class="day-btn" data-day="чт" onclick="toggleDay(this)">Чт</button>
+                    <button class="day-btn" data-day="пт" onclick="toggleDay(this)">Пт</button>
+                    <button class="day-btn" data-day="сб" onclick="toggleDay(this)">Сб</button>
+                    <button class="day-btn" data-day="вс" onclick="toggleDay(this)">Вс</button>
+                </div>
             </div>
 
             <h2>Контактные данные</h2>
             <div class="input-group">
-                <label>Название компании</label>
+                <label>Название компании <span class="required">*</span></label>
                 <input type="text" id="company-name" placeholder="ООО Ромашка">
             </div>
             <div class="input-group">
-                <label>Контактный телефон</label>
+                <label>Контактный телефон <span class="required">*</span></label>
                 <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
             </div>
             <div class="input-group">
-                <label>Адрес доставки</label>
+                <label>Адрес доставки <span class="required">*</span></label>
                 <input type="text" id="address" placeholder="ул. Примерная, д. 1">
             </div>
             <div class="input-group">
                 <label>Комментарий к заказу</label>
                 <textarea id="comment" placeholder="Дополнительные пожелания..."></textarea>
+            </div>
+
+            <div class="error-message" id="error-message">
+                Пожалуйста, заполните все обязательные поля
             </div>
 
             <div class="summary" id="summary">
@@ -318,27 +351,18 @@
             </p>
 
             <div class="retail-card" onclick="selectRetail('cake')">
-                <div>
-                    <strong>Торт на заказ</strong>
-                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Любой дизайн и начинка</p>
-                </div>
-                <span>🎂</span>
+                <strong>Торт на заказ</strong>
+                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Любой дизайн и начинка</p>
             </div>
 
             <div class="retail-card" onclick="selectRetail('cupcakes')">
-                <div>
-                    <strong>Капкейки</strong>
-                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Набор от 6 штук</p>
-                </div>
-                <span>🧁</span>
+                <strong>Капкейки</strong>
+                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Набор от 6 штук</p>
             </div>
 
             <div class="retail-card" onclick="selectRetail('desserts')">
-                <div>
-                    <strong>Десерты</strong>
-                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Пирожные, муссы, эклеры</p>
-                </div>
-                <span>🍰</span>
+                <strong>Десерты</strong>
+                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Пирожные, муссы, эклеры</p>
             </div>
 
             <div id="retail-status" class="summary hidden">
@@ -356,21 +380,22 @@
         // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
-        // Продукты B2B
+        // Продукты B2B (без смайликов)
         const products = [
-            { id: 1, name: 'Медовик', emoji: '🍯', desc: 'Классический медовый торт' },
-            { id: 2, name: 'Чизкейк + ягодный сироп', emoji: '🍓', desc: 'Нежный чизкейк с ягодами' },
-            { id: 3, name: 'Наполеон', emoji: '🥐', desc: 'Слоёный торт с кремом' },
-            { id: 4, name: 'Торт Шоколад-вишня', emoji: '🍫', desc: 'Шоколадный с вишней' },
-            { id: 5, name: 'Тирамису классика', emoji: '☕', desc: 'Итальянский десерт' },
-            { id: 6, name: 'Тирамису Фисташка', emoji: '🟢', desc: 'С фисташковым кремом' },
-            { id: 7, name: 'Тирамису Ягода', emoji: '🫐', desc: 'С ягодным вкусом' },
-            { id: 8, name: 'Тирамису солёная карамель', emoji: '🧂', desc: 'С карамельным соусом' }
+            { id: 1, name: 'Медовик' },
+            { id: 2, name: 'Чизкейк + ягодный сироп' },
+            { id: 3, name: 'Наполеон' },
+            { id: 4, name: 'Торт Шоколад-вишня' },
+            { id: 5, name: 'Тирамису классика' },
+            { id: 6, name: 'Тирамису Фисташка' },
+            { id: 7, name: 'Тирамису Ягода' },
+            { id: 8, name: 'Тирамису соленая карамель' }
         ];
 
         // Состояние заказа
         const order = {
             quantities: {},
+            firstDelivery: '',
             days: [],
             company: '',
             phone: '',
@@ -381,6 +406,11 @@
         // Инициализация количеств
         products.forEach(p => order.quantities[p.id] = 0);
 
+        // Установка минимальной даты (завтра)
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('first-delivery').min = tomorrow.toISOString().split('T')[0];
+
         // Рендер продуктов
         function renderProducts() {
             const container = document.getElementById('products-list');
@@ -388,11 +418,9 @@
                 <div class="product-card">
                     <div class="product-header">
                         <span class="product-name">${p.name}</span>
-                        <span class="product-emoji">${p.emoji}</span>
                     </div>
-                    <div class="product-desc">${p.desc}</div>
                     <div class="quantity-control">
-                        <button class="qty-btn" onclick="changeQty(${p.id}, -1)" ${order.quantities[p.id] === 0 ? 'disabled' : ''}>−</button>
+                        <button class="qty-btn" onclick="changeQty(${p.id}, -1)" ${order.quantities[p.id] === 0 ? 'disabled' : ''}>-</button>
                         <span class="qty-value">${order.quantities[p.id]}</span>
                         <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
                         <span class="qty-label">кг</span>
@@ -426,8 +454,8 @@
             const totalKg = Object.values(order.quantities).reduce((sum, qty) => sum + qty, 0);
             document.getElementById('total-items').textContent = `${totalItems} поз. / ${totalKg} кг`;
 
-            // Показываем/скрываем кнопку отправки
-            if (totalKg > 0 && order.days.length > 0) {
+            // Показываем кнопку если есть товары
+            if (totalKg > 0) {
                 tg.MainButton.text = `Отправить заказ (${totalKg} кг)`;
                 tg.MainButton.show();
             } else {
@@ -443,6 +471,7 @@
             if (section === 'b2b') {
                 document.querySelector('.client-btn:first-child').classList.add('active');
                 document.getElementById('b2b-section').classList.add('active');
+                updateSummary();
             } else {
                 document.querySelector('.client-btn:last-child').classList.add('active');
                 document.getElementById('retail-section').classList.add('active');
@@ -455,8 +484,64 @@
             document.getElementById('retail-status').classList.remove('hidden');
         }
 
+        // Валидация формы
+        function validateForm() {
+            let isValid = true;
+            const errorMessage = document.getElementById('error-message');
+
+            // Сбрасываем ошибки
+            document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+            errorMessage.classList.remove('show');
+
+            // Проверяем дату
+            const firstDelivery = document.getElementById('first-delivery');
+            if (!firstDelivery.value) {
+                firstDelivery.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем компанию
+            const company = document.getElementById('company-name');
+            if (!company.value.trim()) {
+                company.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем телефон
+            const phone = document.getElementById('phone');
+            if (!phone.value.trim()) {
+                phone.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем адрес
+            const address = document.getElementById('address');
+            if (!address.value.trim()) {
+                address.classList.add('error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                errorMessage.classList.add('show');
+            }
+
+            return isValid;
+        }
+
+        // Форматирование даты
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
         // Отправка заказа
         tg.MainButton.onClick(function() {
+            // Валидация
+            if (!validateForm()) {
+                return;
+            }
+
+            order.firstDelivery = document.getElementById('first-delivery').value;
             order.company = document.getElementById('company-name').value;
             order.phone = document.getElementById('phone').value;
             order.address = document.getElementById('address').value;
@@ -470,6 +555,7 @@
                     name: p.name,
                     quantity: order.quantities[p.id]
                 })),
+                firstDelivery: order.firstDelivery,
                 days: order.days,
                 company: order.company,
                 phone: order.phone,
