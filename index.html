@@ -16,39 +16,214 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #000000);
-            padding: 20px;
+            padding: 16px;
+            padding-bottom: 100px;
             min-height: 100vh;
         }
 
         .container {
-            max-width: 400px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
-            font-size: 24px;
+            margin-bottom: 8px;
+            font-size: 22px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 20px 0 12px 0;
         }
 
         .welcome {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: var(--tg-theme-hint-color, #999999);
+            font-size: 14px;
         }
 
-        .user-info {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            padding: 15px;
-            border-radius: 12px;
+        /* Выбор типа клиента */
+        .client-type {
+            display: flex;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
-        .user-info p {
-            margin: 5px 0;
+        .client-btn {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid var(--tg-theme-button-color, #3390ec);
+            background: transparent;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--tg-theme-button-color, #3390ec);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .menu-item {
+        .client-btn.active {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        /* Секции */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Карточка продукта */
+        .product-card {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .product-emoji {
+            font-size: 24px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #999);
+            margin-bottom: 10px;
+        }
+
+        /* Счётчик количества */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: var(--tg-theme-button-color, #3390ec);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .qty-value {
+            font-size: 18px;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .qty-label {
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #999);
+            margin-left: auto;
+        }
+
+        /* Выбор дней недели */
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .day-btn {
+            padding: 10px 4px;
+            border: 2px solid var(--tg-theme-button-color, #3390ec);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--tg-theme-button-color, #3390ec);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .day-btn.selected {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        /* Контактная информация */
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            border-radius: 10px;
+            font-size: 16px;
+            background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            color: var(--tg-theme-text-color, #000);
+        }
+
+        .input-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        /* Итого */
+        .summary {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 16px;
+            border-top: 1px solid var(--tg-theme-hint-color, #ccc);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        /* Розничные товары */
+        .retail-card {
             background: var(--tg-theme-secondary-bg-color, #f0f0f0);
             padding: 15px;
             border-radius: 12px;
@@ -60,114 +235,255 @@
             transition: transform 0.2s;
         }
 
-        .menu-item:active {
+        .retail-card:active {
             transform: scale(0.98);
         }
 
-        .menu-item span {
+        .retail-card span {
             font-size: 24px;
         }
 
-        .status {
-            text-align: center;
-            padding: 20px;
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 12px;
-            margin-top: 20px;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Кондитерская</h1>
-        <p class="welcome">Добро пожаловать!</p>
+        <p class="welcome">Выберите тип заказа</p>
 
-        <div class="user-info" id="userInfo">
-            <p><strong>Загрузка данных...</strong></p>
+        <!-- Выбор типа клиента -->
+        <div class="client-type">
+            <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
+            <button class="client-btn" onclick="switchSection('retail')">Розница</button>
         </div>
 
-        <h2 style="margin-bottom: 15px;">Что хотите заказать?</h2>
+        <!-- B2B Секция -->
+        <div id="b2b-section" class="section active">
+            <h2>Оптовый заказ</h2>
+            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 16px;">
+                Укажите количество для каждой позиции (кг)
+            </p>
 
-        <div class="menu-item" onclick="selectItem('cake')">
-            <div>
-                <strong>Торт</strong>
-                <p style="font-size: 14px; color: var(--tg-theme-hint-color, #999);">На заказ по вашему дизайну</p>
+            <div id="products-list">
+                <!-- Продукты будут добавлены через JS -->
             </div>
-            <span>🎂</span>
-        </div>
 
-        <div class="menu-item" onclick="selectItem('cupcakes')">
-            <div>
-                <strong>Капкейки</strong>
-                <p style="font-size: 14px; color: var(--tg-theme-hint-color, #999);">Набор от 6 штук</p>
+            <h2>Дни доставки</h2>
+            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 12px;">
+                Выберите дни недели для поставки
+            </p>
+            <div class="days-grid">
+                <button class="day-btn" data-day="пн" onclick="toggleDay(this)">Пн</button>
+                <button class="day-btn" data-day="вт" onclick="toggleDay(this)">Вт</button>
+                <button class="day-btn" data-day="ср" onclick="toggleDay(this)">Ср</button>
+                <button class="day-btn" data-day="чт" onclick="toggleDay(this)">Чт</button>
+                <button class="day-btn" data-day="пт" onclick="toggleDay(this)">Пт</button>
+                <button class="day-btn" data-day="сб" onclick="toggleDay(this)">Сб</button>
+                <button class="day-btn" data-day="вс" onclick="toggleDay(this)">Вс</button>
             </div>
-            <span>🧁</span>
-        </div>
 
-        <div class="menu-item" onclick="selectItem('desserts')">
-            <div>
-                <strong>Десерты</strong>
-                <p style="font-size: 14px; color: var(--tg-theme-hint-color, #999);">Пирожные, эклеры, муссы</p>
+            <h2>Контактные данные</h2>
+            <div class="input-group">
+                <label>Название компании</label>
+                <input type="text" id="company-name" placeholder="ООО Ромашка">
             </div>
-            <span>🍰</span>
+            <div class="input-group">
+                <label>Контактный телефон</label>
+                <input type="tel" id="phone" placeholder="+7 (999) 123-45-67">
+            </div>
+            <div class="input-group">
+                <label>Адрес доставки</label>
+                <input type="text" id="address" placeholder="ул. Примерная, д. 1">
+            </div>
+            <div class="input-group">
+                <label>Комментарий к заказу</label>
+                <textarea id="comment" placeholder="Дополнительные пожелания..."></textarea>
+            </div>
+
+            <div class="summary" id="summary">
+                <div class="summary-row total">
+                    <span>Выбрано позиций:</span>
+                    <span id="total-items">0</span>
+                </div>
+            </div>
         </div>
 
-        <div class="status" id="status" style="display: none;"></div>
+        <!-- Розница Секция -->
+        <div id="retail-section" class="section">
+            <h2>Индивидуальный заказ</h2>
+            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 16px;">
+                Торты и десерты на заказ по вашему дизайну
+            </p>
+
+            <div class="retail-card" onclick="selectRetail('cake')">
+                <div>
+                    <strong>Торт на заказ</strong>
+                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Любой дизайн и начинка</p>
+                </div>
+                <span>🎂</span>
+            </div>
+
+            <div class="retail-card" onclick="selectRetail('cupcakes')">
+                <div>
+                    <strong>Капкейки</strong>
+                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Набор от 6 штук</p>
+                </div>
+                <span>🧁</span>
+            </div>
+
+            <div class="retail-card" onclick="selectRetail('desserts')">
+                <div>
+                    <strong>Десерты</strong>
+                    <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Пирожные, муссы, эклеры</p>
+                </div>
+                <span>🍰</span>
+            </div>
+
+            <div id="retail-status" class="summary hidden">
+                <p style="text-align: center;">Раздел в разработке. Скоро здесь появится форма заказа!</p>
+            </div>
+        </div>
     </div>
 
     <script>
         // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
-
-        // Сообщаем Telegram что приложение готово
         tg.ready();
-
-        // Расширяем на весь экран
         tg.expand();
 
-        // Получаем данные пользователя
+        // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
-        // Отображаем информацию о пользователе
-        const userInfoDiv = document.getElementById('userInfo');
-        if (user) {
-            userInfoDiv.innerHTML = `
-                <p><strong>Привет, ${user.first_name}!</strong></p>
-                <p>ID: ${user.id}</p>
-                ${user.username ? `<p>Username: @${user.username}</p>` : ''}
-            `;
-        } else {
-            userInfoDiv.innerHTML = `
-                <p><strong>Тестовый режим</strong></p>
-                <p>Откройте через Telegram для полного функционала</p>
-            `;
+        // Продукты B2B
+        const products = [
+            { id: 1, name: 'Медовик', emoji: '🍯', desc: 'Классический медовый торт' },
+            { id: 2, name: 'Чизкейк + ягодный сироп', emoji: '🍓', desc: 'Нежный чизкейк с ягодами' },
+            { id: 3, name: 'Наполеон', emoji: '🥐', desc: 'Слоёный торт с кремом' },
+            { id: 4, name: 'Торт Шоколад-вишня', emoji: '🍫', desc: 'Шоколадный с вишней' },
+            { id: 5, name: 'Тирамису классика', emoji: '☕', desc: 'Итальянский десерт' },
+            { id: 6, name: 'Тирамису Фисташка', emoji: '🟢', desc: 'С фисташковым кремом' },
+            { id: 7, name: 'Тирамису Ягода', emoji: '🫐', desc: 'С ягодным вкусом' },
+            { id: 8, name: 'Тирамису солёная карамель', emoji: '🧂', desc: 'С карамельным соусом' }
+        ];
+
+        // Состояние заказа
+        const order = {
+            quantities: {},
+            days: [],
+            company: '',
+            phone: '',
+            address: '',
+            comment: ''
+        };
+
+        // Инициализация количеств
+        products.forEach(p => order.quantities[p.id] = 0);
+
+        // Рендер продуктов
+        function renderProducts() {
+            const container = document.getElementById('products-list');
+            container.innerHTML = products.map(p => `
+                <div class="product-card">
+                    <div class="product-header">
+                        <span class="product-name">${p.name}</span>
+                        <span class="product-emoji">${p.emoji}</span>
+                    </div>
+                    <div class="product-desc">${p.desc}</div>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="changeQty(${p.id}, -1)" ${order.quantities[p.id] === 0 ? 'disabled' : ''}>−</button>
+                        <span class="qty-value">${order.quantities[p.id]}</span>
+                        <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
+                        <span class="qty-label">кг</span>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Обработка выбора товара
-        function selectItem(item) {
-            const names = {
-                'cake': 'Торт',
-                'cupcakes': 'Капкейки',
-                'desserts': 'Десерты'
+        // Изменение количества
+        function changeQty(productId, delta) {
+            order.quantities[productId] = Math.max(0, order.quantities[productId] + delta);
+            renderProducts();
+            updateSummary();
+        }
+
+        // Переключение дня
+        function toggleDay(btn) {
+            btn.classList.toggle('selected');
+            const day = btn.dataset.day;
+            if (btn.classList.contains('selected')) {
+                order.days.push(day);
+            } else {
+                order.days = order.days.filter(d => d !== day);
+            }
+            updateSummary();
+        }
+
+        // Обновление итого
+        function updateSummary() {
+            const totalItems = Object.values(order.quantities).reduce((sum, qty) => sum + (qty > 0 ? 1 : 0), 0);
+            const totalKg = Object.values(order.quantities).reduce((sum, qty) => sum + qty, 0);
+            document.getElementById('total-items').textContent = `${totalItems} поз. / ${totalKg} кг`;
+
+            // Показываем/скрываем кнопку отправки
+            if (totalKg > 0 && order.days.length > 0) {
+                tg.MainButton.text = `Отправить заказ (${totalKg} кг)`;
+                tg.MainButton.show();
+            } else {
+                tg.MainButton.hide();
+            }
+        }
+
+        // Переключение секций
+        function switchSection(section) {
+            document.querySelectorAll('.client-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+            if (section === 'b2b') {
+                document.querySelector('.client-btn:first-child').classList.add('active');
+                document.getElementById('b2b-section').classList.add('active');
+            } else {
+                document.querySelector('.client-btn:last-child').classList.add('active');
+                document.getElementById('retail-section').classList.add('active');
+                tg.MainButton.hide();
+            }
+        }
+
+        // Выбор розничного товара
+        function selectRetail(item) {
+            document.getElementById('retail-status').classList.remove('hidden');
+        }
+
+        // Отправка заказа
+        tg.MainButton.onClick(function() {
+            order.company = document.getElementById('company-name').value;
+            order.phone = document.getElementById('phone').value;
+            order.address = document.getElementById('address').value;
+            order.comment = document.getElementById('comment').value;
+
+            // Формируем данные для отправки
+            const orderData = {
+                type: 'b2b',
+                user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
+                products: products.filter(p => order.quantities[p.id] > 0).map(p => ({
+                    name: p.name,
+                    quantity: order.quantities[p.id]
+                })),
+                days: order.days,
+                company: order.company,
+                phone: order.phone,
+                address: order.address,
+                comment: order.comment
             };
 
-            const statusDiv = document.getElementById('status');
-            statusDiv.style.display = 'block';
-            statusDiv.className = 'status success';
-            statusDiv.innerHTML = `Вы выбрали: <strong>${names[item]}</strong><br><br>Скоро здесь будет форма заказа!`;
+            // Отправляем данные боту
+            tg.sendData(JSON.stringify(orderData));
+        });
 
-            // Можно отправить данные боту
-            // tg.sendData(JSON.stringify({action: 'select', item: item}));
-        }
-
-        // Настраиваем главную кнопку (пока скрыта)
-        tg.MainButton.text = "Оформить заказ";
-        // tg.MainButton.show();
+        // Инициализация
+        renderProducts();
+        updateSummary();
     </script>
 </body>
 </html>
