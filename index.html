@@ -260,7 +260,59 @@
             color: var(--candy);
         }
 
-        /* Розничные товары */
+        /* Квадратные карточки выбора категории */
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(213, 77, 49, 0.1);
+            border: 2px solid transparent;
+            text-align: center;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .category-card:hover {
+            border-color: var(--candy);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(213, 77, 49, 0.2);
+        }
+
+        .category-card:active {
+            transform: scale(0.96);
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .category-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--onyx);
+            line-height: 1.3;
+        }
+
+        .category-subtitle {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        /* Старые карточки (для совместимости) */
         .retail-card {
             background: white;
             padding: 18px;
@@ -528,7 +580,7 @@
     <div class="container">
         <!-- Выбор типа клиента -->
         <div class="client-type">
-            <button class="client-btn" onclick="switchSection('retail')">Розница</button>
+            <button class="client-btn" onclick="switchSection('retail')">Заказ</button>
             <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
         </div>
 
@@ -603,19 +655,18 @@
         <div id="retail-section" class="section">
             <!-- Шаг 1: Выбор категории -->
             <div id="retail-step1">
-                <h2>Выберите категорию</h2>
-                <p class="section-hint">
-                    Торты и десерты на заказ по вашему дизайну
-                </p>
+                <div class="category-grid">
+                    <div class="category-card" onclick="selectRetailCategory('cake')">
+                        <div class="category-icon">🎂</div>
+                        <div class="category-title">Торты<br>на заказ</div>
+                        <div class="category-subtitle">от 1 кг</div>
+                    </div>
 
-                <div class="retail-card" onclick="selectRetailCategory('cake')">
-                    <strong>Торт на заказ</strong>
-                    <p>От 1 кг, любой дизайн</p>
-                </div>
-
-                <div class="retail-card" onclick="selectRetailCategory('bento')">
-                    <strong>Бенто торт</strong>
-                    <p>800 гр, мини-торт в коробочке</p>
+                    <div class="category-card" onclick="selectRetailCategory('bento')">
+                        <div class="category-icon">🍰</div>
+                        <div class="category-title">Бенто<br>на заказ</div>
+                        <div class="category-subtitle">800 гр</div>
+                    </div>
                 </div>
             </div>
 
