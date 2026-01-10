@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Кондитерская - Заказ</title>
+    <title>Tiramissu' - Заказ</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --candy: #D54D31;
+            --candy-light: #e05a3f;
+            --sugar: #FFF7F5;
+            --onyx: #080F0D;
+            --sky: #C4E0E6;
+            --gray-light: #f5f0ee;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,10 +25,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #000000);
-            padding: 16px;
+            font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--sugar);
+            color: var(--onyx);
+            padding: 0;
             padding-bottom: 100px;
             min-height: 100vh;
         }
@@ -24,24 +36,36 @@
         .container {
             max-width: 100%;
             margin: 0 auto;
+            padding: 0 16px 16px 16px;
         }
 
-        h1 {
+        /* Шапка с логотипом */
+        .header {
+            background: var(--sugar);
+            padding: 16px;
             text-align: center;
-            margin-bottom: 8px;
-            font-size: 22px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 32px;
+            margin-bottom: 4px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            color: var(--candy);
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         h2 {
             font-size: 18px;
+            font-weight: 700;
             margin: 20px 0 12px 0;
-        }
-
-        .welcome {
-            text-align: center;
-            margin-bottom: 20px;
-            color: var(--tg-theme-hint-color, #999999);
-            font-size: 14px;
+            color: var(--onyx);
         }
 
         /* Выбор типа клиента */
@@ -54,19 +78,24 @@
         .client-btn {
             flex: 1;
             padding: 14px 10px;
-            border: 2px solid var(--tg-theme-button-color, #3390ec);
+            border: 2px solid var(--candy);
             background: transparent;
             border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
             font-size: 14px;
-            font-weight: 600;
-            color: var(--tg-theme-button-color, #3390ec);
+            font-weight: 700;
+            color: var(--candy);
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .client-btn.active {
-            background: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #ffffff);
+            background: var(--candy);
+            color: white;
+        }
+
+        .client-btn:hover:not(.active) {
+            background: rgba(213, 77, 49, 0.1);
         }
 
         /* Секции */
@@ -80,22 +109,25 @@
 
         /* Карточка продукта */
         .product-card {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 12px;
-            padding: 14px;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
             margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(213, 77, 49, 0.08);
+            border: 1px solid rgba(213, 77, 49, 0.1);
         }
 
         .product-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .product-name {
             font-weight: 600;
             font-size: 15px;
+            color: var(--onyx);
         }
 
         /* Счётчик количества */
@@ -106,34 +138,44 @@
         }
 
         .qty-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             border: none;
-            background: var(--tg-theme-button-color, #3390ec);
+            background: var(--candy);
             color: white;
-            font-size: 20px;
+            font-size: 22px;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--candy-light);
+            transform: scale(1.05);
         }
 
         .qty-btn:disabled {
-            opacity: 0.4;
+            opacity: 0.3;
             cursor: not-allowed;
+            transform: none;
         }
 
         .qty-value {
-            font-size: 18px;
-            font-weight: 600;
-            min-width: 30px;
+            font-size: 20px;
+            font-weight: 700;
+            min-width: 40px;
             text-align: center;
+            color: var(--onyx);
         }
 
         .qty-label {
-            font-size: 13px;
-            color: var(--tg-theme-hint-color, #999);
+            font-size: 14px;
+            color: var(--candy);
+            font-weight: 500;
             margin-left: auto;
         }
 
@@ -147,24 +189,37 @@
             font-size: 14px;
             font-weight: 500;
             margin-bottom: 6px;
+            color: var(--onyx);
         }
 
         .input-group label .required {
-            color: #e53935;
+            color: var(--candy);
         }
 
         .input-group input, .input-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--tg-theme-hint-color, #ccc);
-            border-radius: 10px;
+            padding: 14px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
             font-size: 16px;
-            background: var(--tg-theme-secondary-bg-color, #f5f5f5);
-            color: var(--tg-theme-text-color, #000);
+            background: white;
+            color: var(--onyx);
+            transition: border-color 0.2s;
         }
 
-        .input-group input.error {
-            border-color: #e53935;
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--candy);
+        }
+
+        .input-group input.error, .input-group textarea.error {
+            border-color: var(--candy);
+            background: rgba(213, 77, 49, 0.05);
+        }
+
+        .input-group input::placeholder, .input-group textarea::placeholder {
+            color: #aaa;
         }
 
         .input-group textarea {
@@ -174,10 +229,12 @@
 
         /* Итого */
         .summary {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            border-radius: 12px;
-            padding: 16px;
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
             margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(213, 77, 49, 0.08);
+            border: 2px solid var(--candy);
         }
 
         .summary-row {
@@ -190,23 +247,40 @@
         .summary-row.total {
             font-weight: 700;
             font-size: 16px;
-            border-top: 1px solid var(--tg-theme-hint-color, #ccc);
-            padding-top: 10px;
-            margin-top: 10px;
+            color: var(--candy);
         }
 
         /* Розничные товары */
         .retail-card {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            padding: 15px;
-            border-radius: 12px;
+            background: white;
+            padding: 18px;
+            border-radius: 16px;
             margin-bottom: 10px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(213, 77, 49, 0.08);
+            border: 1px solid rgba(213, 77, 49, 0.1);
+        }
+
+        .retail-card:hover {
+            border-color: var(--candy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(213, 77, 49, 0.15);
         }
 
         .retail-card:active {
             transform: scale(0.98);
+        }
+
+        .retail-card strong {
+            color: var(--onyx);
+            font-size: 16px;
+        }
+
+        .retail-card p {
+            font-size: 13px;
+            color: #888;
+            margin-top: 4px;
         }
 
         .hidden {
@@ -220,17 +294,25 @@
 
         .date-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--tg-theme-hint-color, #ccc);
-            border-radius: 10px;
+            padding: 14px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
             font-size: 16px;
-            background: var(--tg-theme-secondary-bg-color, #f5f5f5);
-            color: var(--tg-theme-text-color, #000);
+            background: white;
+            color: var(--onyx);
             margin-bottom: 12px;
+            transition: border-color 0.2s;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: var(--candy);
         }
 
         .date-input.error {
-            border-color: #e53935;
+            border-color: var(--candy);
+            background: rgba(213, 77, 49, 0.05);
         }
 
         /* Дни недели для регулярных поставок */
@@ -241,39 +323,81 @@
         }
 
         .day-btn {
-            padding: 10px 4px;
-            border: 2px solid var(--tg-theme-button-color, #3390ec);
+            padding: 12px 4px;
+            border: 2px solid var(--candy);
             background: transparent;
-            border-radius: 8px;
+            border-radius: 10px;
+            font-family: 'Ubuntu', sans-serif;
             font-size: 12px;
-            font-weight: 600;
-            color: var(--tg-theme-button-color, #3390ec);
+            font-weight: 700;
+            color: var(--candy);
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .day-btn.selected {
-            background: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #ffffff);
+            background: var(--candy);
+            color: white;
+        }
+
+        .day-btn:hover:not(.selected) {
+            background: rgba(213, 77, 49, 0.1);
         }
 
         .error-message {
-            color: #e53935;
+            color: var(--candy);
             font-size: 13px;
+            font-weight: 500;
             margin-top: 8px;
+            padding: 12px;
+            background: rgba(213, 77, 49, 0.1);
+            border-radius: 10px;
             display: none;
         }
 
         .error-message.show {
             display: block;
         }
+
+        .section-hint {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+
+        /* Декоративный элемент */
+        .decoration {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--candy);
+            opacity: 0.3;
+        }
+
+        /* Статус в разработке */
+        .coming-soon {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, rgba(213, 77, 49, 0.05) 0%, rgba(196, 224, 230, 0.2) 100%);
+            border-radius: 16px;
+            border: 2px dashed var(--candy);
+        }
+
+        .coming-soon p {
+            color: var(--candy);
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Кондитерская</h1>
-        <p class="welcome">Выберите тип заказа</p>
+    <!-- Шапка -->
+    <div class="header">
+        <svg class="logo" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="32" font-family="Ubuntu, sans-serif" font-size="32" font-weight="700" fill="#D54D31">tiramissu'</text>
+        </svg>
+        <div class="tagline">coffee&tiramisu</div>
+    </div>
 
+    <div class="container">
         <!-- Выбор типа клиента -->
         <div class="client-type">
             <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
@@ -283,7 +407,7 @@
         <!-- B2B Секция -->
         <div id="b2b-section" class="section active">
             <h2>Оптовый заказ</h2>
-            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 16px;">
+            <p class="section-hint">
                 Укажите количество для каждой позиции (кг)
             </p>
 
@@ -299,7 +423,7 @@
                     <input type="date" id="first-delivery" class="date-input" min="">
                 </div>
 
-                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 12px;">
+                <p class="section-hint">
                     Регулярные дни поставок:
                 </p>
                 <div class="days-grid">
@@ -337,8 +461,8 @@
 
             <div class="summary" id="summary">
                 <div class="summary-row total">
-                    <span>Выбрано позиций:</span>
-                    <span id="total-items">0</span>
+                    <span>Выбрано:</span>
+                    <span id="total-items">0 поз. / 0 кг</span>
                 </div>
             </div>
         </div>
@@ -346,27 +470,28 @@
         <!-- Розница Секция -->
         <div id="retail-section" class="section">
             <h2>Индивидуальный заказ</h2>
-            <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999); margin-bottom: 16px;">
+            <p class="section-hint">
                 Торты и десерты на заказ по вашему дизайну
             </p>
 
             <div class="retail-card" onclick="selectRetail('cake')">
                 <strong>Торт на заказ</strong>
-                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Любой дизайн и начинка</p>
+                <p>Любой дизайн и начинка</p>
             </div>
 
             <div class="retail-card" onclick="selectRetail('cupcakes')">
                 <strong>Капкейки</strong>
-                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Набор от 6 штук</p>
+                <p>Набор от 6 штук</p>
             </div>
 
             <div class="retail-card" onclick="selectRetail('desserts')">
                 <strong>Десерты</strong>
-                <p style="font-size: 13px; color: var(--tg-theme-hint-color, #999);">Пирожные, муссы, эклеры</p>
+                <p>Пирожные, муссы, эклеры</p>
             </div>
 
-            <div id="retail-status" class="summary hidden">
-                <p style="text-align: center;">Раздел в разработке. Скоро здесь появится форма заказа!</p>
+            <div id="retail-status" class="coming-soon hidden">
+                <p>Раздел в разработке</p>
+                <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Скоро здесь появится форма заказа!</p>
             </div>
         </div>
     </div>
@@ -377,10 +502,14 @@
         tg.ready();
         tg.expand();
 
+        // Устанавливаем цвет кнопки под бренд
+        tg.MainButton.color = '#D54D31';
+        tg.MainButton.textColor = '#FFFFFF';
+
         // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
-        // Продукты B2B (без смайликов)
+        // Продукты B2B
         const products = [
             { id: 1, name: 'Медовик' },
             { id: 2, name: 'Чизкейк + ягодный сироп' },
@@ -526,12 +655,6 @@
             }
 
             return isValid;
-        }
-
-        // Форматирование даты
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
         // Отправка заказа
