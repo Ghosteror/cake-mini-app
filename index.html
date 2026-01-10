@@ -49,16 +49,20 @@
             z-index: 100;
         }
 
-        .logo {
-            height: 32px;
-            margin-bottom: 4px;
+        .logo-text {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--candy);
+            text-align: center;
         }
 
         .tagline {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--candy);
             font-weight: 500;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: lowercase;
         }
 
         h2 {
@@ -128,6 +132,12 @@
             font-weight: 600;
             font-size: 15px;
             color: var(--onyx);
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--candy);
         }
 
         /* Счётчик количества */
@@ -391,17 +401,15 @@
 <body>
     <!-- Шапка -->
     <div class="header">
-        <svg class="logo" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <text x="0" y="32" font-family="Ubuntu, sans-serif" font-size="32" font-weight="700" fill="#D54D31">tiramissu'</text>
-        </svg>
-        <div class="tagline">coffee&tiramisu</div>
+        <div class="logo-text">tiramiss'u</div>
+        <div class="tagline">only cake</div>
     </div>
 
     <div class="container">
         <!-- Выбор типа клиента -->
         <div class="client-type">
-            <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
             <button class="client-btn" onclick="switchSection('retail')">Розница</button>
+            <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
         </div>
 
         <!-- B2B Секция -->
@@ -460,9 +468,13 @@
             </div>
 
             <div class="summary" id="summary">
-                <div class="summary-row total">
+                <div class="summary-row">
                     <span>Выбрано:</span>
-                    <span id="total-items">0 поз. / 0 кг</span>
+                    <span id="total-items">0 поз. / 0 шт</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Итого:</span>
+                    <span id="total-price">0 ₽</span>
                 </div>
             </div>
         </div>
@@ -491,7 +503,7 @@
 
             <div id="retail-status" class="coming-soon hidden">
                 <p>Раздел в разработке</p>
-                <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Скоро здесь появится форма заказа!</p>
+                <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Скоро здесь появится форма заказа</p>
             </div>
         </div>
     </div>
@@ -509,16 +521,18 @@
         // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
-        // Продукты B2B
+        // Продукты B2B с ценами
         const products = [
-            { id: 1, name: 'Медовик' },
-            { id: 2, name: 'Чизкейк + ягодный сироп' },
-            { id: 3, name: 'Наполеон' },
-            { id: 4, name: 'Торт Шоколад-вишня' },
-            { id: 5, name: 'Тирамису классика' },
-            { id: 6, name: 'Тирамису Фисташка' },
-            { id: 7, name: 'Тирамису Ягода' },
-            { id: 8, name: 'Тирамису соленая карамель' }
+            { id: 1, name: 'Медовик', price: 2600 },
+            { id: 2, name: 'Чизкейк + ягодный сироп', price: 3000 },
+            { id: 3, name: 'Наполеон', price: 2600 },
+            { id: 4, name: 'Торт Шоколад-вишня', price: 2900 },
+            { id: 5, name: 'Тирамису классика', price: 3150 },
+            { id: 6, name: 'Тирамису фисташка', price: 3450 },
+            { id: 7, name: 'Тирамису ягода', price: 3300 },
+            { id: 8, name: 'Тирамису солёная карамель', price: 3300 },
+            { id: 9, name: 'Тирамису лимон', price: 3300 },
+            { id: 10, name: 'Тирамису мак', price: 3450 }
         ];
 
         // Состояние заказа
@@ -547,12 +561,13 @@
                 <div class="product-card">
                     <div class="product-header">
                         <span class="product-name">${p.name}</span>
+                        <span class="product-price">${p.price} ₽</span>
                     </div>
                     <div class="quantity-control">
-                        <button class="qty-btn" onclick="changeQty(${p.id}, -1)" ${order.quantities[p.id] === 0 ? 'disabled' : ''}>-</button>
+                        <button class="qty-btn" onclick="changeQty(${p.id}, -1)" ${order.quantities[p.id] === 0 ? 'disabled' : ''}>−</button>
                         <span class="qty-value">${order.quantities[p.id]}</span>
                         <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
-                        <span class="qty-label">кг</span>
+                        <span class="qty-label">шт</span>
                     </div>
                 </div>
             `).join('');
@@ -580,12 +595,20 @@
         // Обновление итого
         function updateSummary() {
             const totalItems = Object.values(order.quantities).reduce((sum, qty) => sum + (qty > 0 ? 1 : 0), 0);
-            const totalKg = Object.values(order.quantities).reduce((sum, qty) => sum + qty, 0);
-            document.getElementById('total-items').textContent = `${totalItems} поз. / ${totalKg} кг`;
+            const totalQty = Object.values(order.quantities).reduce((sum, qty) => sum + qty, 0);
+
+            // Подсчёт общей суммы
+            let totalPrice = 0;
+            products.forEach(p => {
+                totalPrice += order.quantities[p.id] * p.price;
+            });
+
+            document.getElementById('total-items').textContent = `${totalItems} поз. / ${totalQty} шт`;
+            document.getElementById('total-price').textContent = `${totalPrice.toLocaleString('ru-RU')} ₽`;
 
             // Показываем кнопку если есть товары
-            if (totalKg > 0) {
-                tg.MainButton.text = `Отправить заказ (${totalKg} кг)`;
+            if (totalQty > 0) {
+                tg.MainButton.text = `Оформить заказ на ${totalPrice.toLocaleString('ru-RU')} ₽`;
                 tg.MainButton.show();
             } else {
                 tg.MainButton.hide();
@@ -598,11 +621,11 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
 
             if (section === 'b2b') {
-                document.querySelector('.client-btn:first-child').classList.add('active');
+                document.querySelector('.client-btn:last-child').classList.add('active');
                 document.getElementById('b2b-section').classList.add('active');
                 updateSummary();
             } else {
-                document.querySelector('.client-btn:last-child').classList.add('active');
+                document.querySelector('.client-btn:first-child').classList.add('active');
                 document.getElementById('retail-section').classList.add('active');
                 tg.MainButton.hide();
             }
