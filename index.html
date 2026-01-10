@@ -383,18 +383,138 @@
             opacity: 0.3;
         }
 
-        /* Статус в разработке */
-        .coming-soon {
-            text-align: center;
-            padding: 30px 20px;
-            background: linear-gradient(135deg, rgba(213, 77, 49, 0.05) 0%, rgba(196, 224, 230, 0.2) 100%);
-            border-radius: 16px;
-            border: 2px dashed var(--candy);
+        /* Кнопка назад */
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--candy);
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 8px;
         }
 
-        .coming-soon p {
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Карточка выбранного продукта */
+        .selected-product-card {
+            background: var(--candy);
+            color: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-product-name {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .selected-product-price {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        /* Селектор веса */
+        .weight-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .weight-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 12px 8px;
+            border: 2px solid var(--candy);
+            background: transparent;
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--candy);
-            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .weight-btn.selected {
+            background: var(--candy);
+            color: white;
+        }
+
+        .weight-btn:hover:not(.selected) {
+            background: rgba(213, 77, 49, 0.1);
+        }
+
+        /* Селект времени */
+        .time-select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 16px;
+            background: white;
+            color: var(--onyx);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23D54D31' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        .time-select:focus {
+            outline: none;
+            border-color: var(--candy);
+        }
+
+        .time-select.error {
+            border-color: var(--candy);
+            background-color: rgba(213, 77, 49, 0.05);
+        }
+
+        /* Карточка начинки */
+        .flavor-card {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(213, 77, 49, 0.08);
+            border: 1px solid rgba(213, 77, 49, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .flavor-card:hover {
+            border-color: var(--candy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(213, 77, 49, 0.15);
+        }
+
+        .flavor-card:active {
+            transform: scale(0.98);
+        }
+
+        .flavor-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--onyx);
+        }
+
+        .flavor-price {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--candy);
         }
     </style>
 </head>
@@ -481,29 +601,126 @@
 
         <!-- Розница Секция -->
         <div id="retail-section" class="section">
-            <h2>Индивидуальный заказ</h2>
-            <p class="section-hint">
-                Торты и десерты на заказ по вашему дизайну
-            </p>
+            <!-- Шаг 1: Выбор категории -->
+            <div id="retail-step1">
+                <h2>Выберите категорию</h2>
+                <p class="section-hint">
+                    Торты и десерты на заказ по вашему дизайну
+                </p>
 
-            <div class="retail-card" onclick="selectRetail('cake')">
-                <strong>Торт на заказ</strong>
-                <p>Любой дизайн и начинка</p>
+                <div class="retail-card" onclick="selectRetailCategory('cake')">
+                    <strong>Торт на заказ</strong>
+                    <p>От 1 кг, любой дизайн</p>
+                </div>
+
+                <div class="retail-card" onclick="selectRetailCategory('bento')">
+                    <strong>Бенто торт</strong>
+                    <p>800 гр, мини-торт в коробочке</p>
+                </div>
             </div>
 
-            <div class="retail-card" onclick="selectRetail('cupcakes')">
-                <strong>Капкейки</strong>
-                <p>Набор от 6 штук</p>
+            <!-- Шаг 2: Выбор начинки -->
+            <div id="retail-step2" class="hidden">
+                <button class="back-btn" onclick="retailGoBack(1)">← Назад</button>
+                <h2 id="retail-category-title">Выберите начинку</h2>
+                <p class="section-hint" id="retail-category-hint">
+                    Выберите начинку для вашего торта
+                </p>
+
+                <div id="retail-flavors-list">
+                    <!-- Начинки будут добавлены через JS -->
+                </div>
             </div>
 
-            <div class="retail-card" onclick="selectRetail('desserts')">
-                <strong>Десерты</strong>
-                <p>Пирожные, муссы, эклеры</p>
-            </div>
+            <!-- Шаг 3: Форма заказа -->
+            <div id="retail-step3" class="hidden">
+                <button class="back-btn" onclick="retailGoBack(2)">← Назад</button>
+                <h2>Детали заказа</h2>
 
-            <div id="retail-status" class="coming-soon hidden">
-                <p>Раздел в разработке</p>
-                <p style="font-size: 13px; margin-top: 8px; opacity: 0.7;">Скоро здесь появится форма заказа</p>
+                <div class="selected-product-card">
+                    <div class="selected-product-name" id="selected-flavor-name">—</div>
+                    <div class="selected-product-price" id="selected-flavor-price">—</div>
+                </div>
+
+                <!-- Вес (только для тортов) -->
+                <div id="weight-section" class="input-group">
+                    <label>Вес торта <span class="required">*</span></label>
+                    <div class="weight-selector">
+                        <button class="weight-btn" data-weight="1" onclick="selectWeight(1)">1 кг</button>
+                        <button class="weight-btn" data-weight="1.5" onclick="selectWeight(1.5)">1.5 кг</button>
+                        <button class="weight-btn" data-weight="2" onclick="selectWeight(2)">2 кг</button>
+                        <button class="weight-btn" data-weight="2.5" onclick="selectWeight(2.5)">2.5 кг</button>
+                        <button class="weight-btn" data-weight="3" onclick="selectWeight(3)">3 кг</button>
+                    </div>
+                </div>
+
+                <!-- Декор -->
+                <div class="input-group">
+                    <label>Декор / Надпись <span class="required">*</span></label>
+                    <textarea id="retail-decor" placeholder="Опишите желаемое оформление, надпись на торте..."></textarea>
+                </div>
+
+                <!-- Дата и время -->
+                <div class="input-group">
+                    <label>Дата получения <span class="required">*</span></label>
+                    <input type="date" id="retail-date" class="date-input">
+                </div>
+                <div class="input-group">
+                    <label>Время получения <span class="required">*</span></label>
+                    <select id="retail-time" class="time-select">
+                        <option value="">Выберите время</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                    </select>
+                </div>
+
+                <!-- Адрес доставки -->
+                <div class="input-group">
+                    <label>Адрес доставки <span class="required">*</span></label>
+                    <input type="text" id="retail-address" placeholder="ул. Примерная, д. 1, кв. 10">
+                </div>
+
+                <!-- Имя и телефон -->
+                <div class="input-group">
+                    <label>Ваше имя <span class="required">*</span></label>
+                    <input type="text" id="retail-name" placeholder="Как к вам обращаться?">
+                </div>
+                <div class="input-group">
+                    <label>Телефон <span class="required">*</span></label>
+                    <input type="tel" id="retail-phone" placeholder="+7 (999) 123-45-67">
+                </div>
+
+                <!-- Особенности / Аллергены -->
+                <div class="input-group">
+                    <label>Особенности / Аллергены</label>
+                    <textarea id="retail-allergies" placeholder="Укажите, если есть аллергия или особые пожелания..."></textarea>
+                </div>
+
+                <div class="error-message" id="retail-error-message">
+                    Пожалуйста, заполните все обязательные поля
+                </div>
+
+                <div class="summary" id="retail-summary">
+                    <div class="summary-row">
+                        <span id="retail-summary-product">—</span>
+                        <span id="retail-summary-weight">—</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Итого:</span>
+                        <span id="retail-total-price">0 ₽</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -631,9 +848,215 @@
             }
         }
 
-        // Выбор розничного товара
-        function selectRetail(item) {
-            document.getElementById('retail-status').classList.remove('hidden');
+        // === РОЗНИЧНАЯ ФОРМА ===
+
+        // Торты на заказ (цена за 1 кг)
+        const cakeFlavors = [
+            { id: 1, name: 'Медовик', price: 4200 },
+            { id: 2, name: 'Сникерс', price: 4200 },
+            { id: 3, name: 'Три шоколада', price: 4200 },
+            { id: 4, name: 'Молочная девочка', price: 4200 },
+            { id: 5, name: 'Рафаэлло', price: 4500 },
+            { id: 6, name: 'Чёрная смородина шоколад', price: 4500 },
+            { id: 7, name: 'Ягода ваниль', price: 4200 },
+            { id: 8, name: 'Фисташка малина', price: 4500 },
+            { id: 9, name: 'Наполеон', price: 3500 }
+        ];
+
+        // Бенто торты (800г, фиксированная цена)
+        const bentoFlavors = [
+            { id: 101, name: 'Медовик', price: 2500 },
+            { id: 102, name: 'Сникерс', price: 2500 },
+            { id: 103, name: 'Три шоколада', price: 2500 },
+            { id: 104, name: 'Молочная девочка', price: 2500 },
+            { id: 105, name: 'Рафаэлло', price: 2700 },
+            { id: 106, name: 'Шоколад-вишня', price: 2700 },
+            { id: 107, name: 'Ягода ваниль', price: 2500 },
+            { id: 108, name: 'Фисташка малина', price: 2700 }
+        ];
+
+        // Состояние розничного заказа
+        const retailOrder = {
+            category: null, // 'cake' или 'bento'
+            flavor: null,
+            weight: 1,
+            decor: '',
+            date: '',
+            time: '',
+            address: '',
+            name: '',
+            phone: '',
+            allergies: ''
+        };
+
+        // Установка минимальной даты для розницы (через 3 дня)
+        const retailMinDate = new Date();
+        retailMinDate.setDate(retailMinDate.getDate() + 3);
+
+        // Выбор категории
+        function selectRetailCategory(category) {
+            retailOrder.category = category;
+
+            document.getElementById('retail-step1').classList.add('hidden');
+            document.getElementById('retail-step2').classList.remove('hidden');
+
+            const flavors = category === 'cake' ? cakeFlavors : bentoFlavors;
+            const title = category === 'cake' ? 'Торт на заказ' : 'Бенто торт';
+            const hint = category === 'cake' ? 'Выберите начинку (цена за 1 кг)' : 'Выберите начинку (800 гр)';
+
+            document.getElementById('retail-category-title').textContent = title;
+            document.getElementById('retail-category-hint').textContent = hint;
+
+            renderFlavors(flavors);
+        }
+
+        // Рендер начинок
+        function renderFlavors(flavors) {
+            const container = document.getElementById('retail-flavors-list');
+            const priceLabel = retailOrder.category === 'cake' ? '/кг' : '';
+            container.innerHTML = flavors.map(f => `
+                <div class="flavor-card" onclick="selectFlavor(${f.id})">
+                    <span class="flavor-name">${f.name}</span>
+                    <span class="flavor-price">${f.price.toLocaleString('ru-RU')} ₽${priceLabel}</span>
+                </div>
+            `).join('');
+        }
+
+        // Выбор начинки
+        function selectFlavor(flavorId) {
+            const flavors = retailOrder.category === 'cake' ? cakeFlavors : bentoFlavors;
+            retailOrder.flavor = flavors.find(f => f.id === flavorId);
+
+            document.getElementById('retail-step2').classList.add('hidden');
+            document.getElementById('retail-step3').classList.remove('hidden');
+
+            // Показываем/скрываем выбор веса
+            const weightSection = document.getElementById('weight-section');
+            if (retailOrder.category === 'bento') {
+                weightSection.classList.add('hidden');
+                retailOrder.weight = 0.8; // 800г фиксированно
+            } else {
+                weightSection.classList.remove('hidden');
+                retailOrder.weight = 1; // По умолчанию 1 кг
+                // Сбрасываем выбор веса
+                document.querySelectorAll('.weight-btn').forEach(btn => btn.classList.remove('selected'));
+                document.querySelector('.weight-btn[data-weight="1"]').classList.add('selected');
+            }
+
+            // Устанавливаем минимальную дату
+            document.getElementById('retail-date').min = retailMinDate.toISOString().split('T')[0];
+
+            updateRetailSummary();
+        }
+
+        // Выбор веса
+        function selectWeight(weight) {
+            retailOrder.weight = weight;
+            document.querySelectorAll('.weight-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector(`.weight-btn[data-weight="${weight}"]`).classList.add('selected');
+            updateRetailSummary();
+        }
+
+        // Обновление итого для розницы
+        function updateRetailSummary() {
+            if (!retailOrder.flavor) return;
+
+            const flavorName = retailOrder.flavor.name;
+            const categoryName = retailOrder.category === 'cake' ? 'Торт' : 'Бенто';
+
+            let totalPrice, weightText;
+
+            if (retailOrder.category === 'bento') {
+                totalPrice = retailOrder.flavor.price;
+                weightText = '800 гр';
+            } else {
+                totalPrice = retailOrder.flavor.price * retailOrder.weight;
+                weightText = `${retailOrder.weight} кг`;
+            }
+
+            document.getElementById('selected-flavor-name').textContent = `${categoryName}: ${flavorName}`;
+            document.getElementById('selected-flavor-price').textContent = `${totalPrice.toLocaleString('ru-RU')} ₽`;
+
+            document.getElementById('retail-summary-product').textContent = `${categoryName}: ${flavorName}`;
+            document.getElementById('retail-summary-weight').textContent = weightText;
+            document.getElementById('retail-total-price').textContent = `${totalPrice.toLocaleString('ru-RU')} ₽`;
+
+            // Показываем кнопку оформления
+            tg.MainButton.text = `Оформить заказ на ${totalPrice.toLocaleString('ru-RU')} ₽`;
+            tg.MainButton.show();
+        }
+
+        // Навигация назад
+        function retailGoBack(toStep) {
+            if (toStep === 1) {
+                document.getElementById('retail-step2').classList.add('hidden');
+                document.getElementById('retail-step1').classList.remove('hidden');
+                retailOrder.category = null;
+                tg.MainButton.hide();
+            } else if (toStep === 2) {
+                document.getElementById('retail-step3').classList.add('hidden');
+                document.getElementById('retail-step2').classList.remove('hidden');
+                retailOrder.flavor = null;
+                tg.MainButton.hide();
+            }
+        }
+
+        // Валидация розничной формы
+        function validateRetailForm() {
+            let isValid = true;
+            const errorMessage = document.getElementById('retail-error-message');
+
+            // Сбрасываем ошибки
+            document.querySelectorAll('#retail-step3 .error').forEach(el => el.classList.remove('error'));
+            errorMessage.classList.remove('show');
+
+            // Проверяем декор
+            const decor = document.getElementById('retail-decor');
+            if (!decor.value.trim()) {
+                decor.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем дату
+            const date = document.getElementById('retail-date');
+            if (!date.value) {
+                date.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем время
+            const time = document.getElementById('retail-time');
+            if (!time.value) {
+                time.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем адрес
+            const address = document.getElementById('retail-address');
+            if (!address.value.trim()) {
+                address.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем имя
+            const name = document.getElementById('retail-name');
+            if (!name.value.trim()) {
+                name.classList.add('error');
+                isValid = false;
+            }
+
+            // Проверяем телефон
+            const phone = document.getElementById('retail-phone');
+            if (!phone.value.trim()) {
+                phone.classList.add('error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                errorMessage.classList.add('show');
+            }
+
+            return isValid;
         }
 
         // Валидация формы
@@ -680,37 +1103,82 @@
             return isValid;
         }
 
+        // Определяем текущую активную секцию
+        function getCurrentSection() {
+            if (document.getElementById('retail-section').classList.contains('active')) {
+                return 'retail';
+            }
+            return 'b2b';
+        }
+
         // Отправка заказа
         tg.MainButton.onClick(function() {
-            // Валидация
-            if (!validateForm()) {
-                return;
+            const currentSection = getCurrentSection();
+
+            if (currentSection === 'retail') {
+                // Розничный заказ
+                if (!validateRetailForm()) {
+                    return;
+                }
+
+                const categoryName = retailOrder.category === 'cake' ? 'Торт на заказ' : 'Бенто торт';
+                let totalPrice, weightText;
+
+                if (retailOrder.category === 'bento') {
+                    totalPrice = retailOrder.flavor.price;
+                    weightText = '800 гр';
+                } else {
+                    totalPrice = retailOrder.flavor.price * retailOrder.weight;
+                    weightText = `${retailOrder.weight} кг`;
+                }
+
+                const orderData = {
+                    type: 'retail',
+                    category: categoryName,
+                    user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
+                    product: retailOrder.flavor.name,
+                    weight: weightText,
+                    price: totalPrice,
+                    decor: document.getElementById('retail-decor').value,
+                    date: document.getElementById('retail-date').value,
+                    time: document.getElementById('retail-time').value,
+                    address: document.getElementById('retail-address').value,
+                    customerName: document.getElementById('retail-name').value,
+                    phone: document.getElementById('retail-phone').value,
+                    allergies: document.getElementById('retail-allergies').value
+                };
+
+                tg.sendData(JSON.stringify(orderData));
+
+            } else {
+                // B2B заказ
+                if (!validateForm()) {
+                    return;
+                }
+
+                order.firstDelivery = document.getElementById('first-delivery').value;
+                order.company = document.getElementById('company-name').value;
+                order.phone = document.getElementById('phone').value;
+                order.address = document.getElementById('address').value;
+                order.comment = document.getElementById('comment').value;
+
+                const orderData = {
+                    type: 'b2b',
+                    user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
+                    products: products.filter(p => order.quantities[p.id] > 0).map(p => ({
+                        name: p.name,
+                        quantity: order.quantities[p.id]
+                    })),
+                    firstDelivery: order.firstDelivery,
+                    days: order.days,
+                    company: order.company,
+                    phone: order.phone,
+                    address: order.address,
+                    comment: order.comment
+                };
+
+                tg.sendData(JSON.stringify(orderData));
             }
-
-            order.firstDelivery = document.getElementById('first-delivery').value;
-            order.company = document.getElementById('company-name').value;
-            order.phone = document.getElementById('phone').value;
-            order.address = document.getElementById('address').value;
-            order.comment = document.getElementById('comment').value;
-
-            // Формируем данные для отправки
-            const orderData = {
-                type: 'b2b',
-                user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
-                products: products.filter(p => order.quantities[p.id] > 0).map(p => ({
-                    name: p.name,
-                    quantity: order.quantities[p.id]
-                })),
-                firstDelivery: order.firstDelivery,
-                days: order.days,
-                company: order.company,
-                phone: order.phone,
-                address: order.address,
-                comment: order.comment
-            };
-
-            // Отправляем данные боту
-            tg.sendData(JSON.stringify(orderData));
         });
 
         // Инициализация
