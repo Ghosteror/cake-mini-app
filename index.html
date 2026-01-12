@@ -83,23 +83,23 @@
             flex: 1;
             padding: 14px 10px;
             border: 2px solid var(--candy);
-            background: transparent;
+            background: var(--candy);
             border-radius: 12px;
             font-family: 'Ubuntu', sans-serif;
             font-size: 14px;
             font-weight: 700;
-            color: var(--candy);
+            color: white;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .client-btn.active {
-            background: var(--candy);
-            color: white;
+            background: white;
+            color: var(--candy);
         }
 
         .client-btn:hover:not(.active) {
-            background: rgba(213, 77, 49, 0.1);
+            background: var(--candy-light);
         }
 
         /* Секции */
