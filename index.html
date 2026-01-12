@@ -1533,6 +1533,11 @@
                 updateCartSummary();
                 // Устанавливаем минимальную дату
                 document.getElementById('retail-date').min = retailMinDate.toISOString().split('T')[0];
+                // Скрываем кнопку корзины когда уже в корзине
+                document.getElementById('cart-badge').classList.remove('show');
+            } else {
+                // Показываем кнопку корзины если есть товары
+                updateCartBadge();
             }
 
             updateMainButton();
