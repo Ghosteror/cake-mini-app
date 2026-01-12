@@ -505,6 +505,228 @@
             background: rgba(213, 77, 49, 0.1);
         }
 
+        /* Кнопка Big size */
+        .big-size-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 2px solid var(--candy);
+            background: transparent;
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--candy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .big-size-btn.selected {
+            background: var(--candy);
+            color: white;
+        }
+
+        .big-size-btn:hover:not(.selected) {
+            background: rgba(213, 77, 49, 0.1);
+        }
+
+        /* Поле ввода кастомного веса */
+        .custom-weight-input {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .custom-weight-input.show {
+            display: block;
+        }
+
+        .custom-weight-input input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--candy);
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 16px;
+            background: white;
+            color: var(--onyx);
+            text-align: center;
+        }
+
+        .custom-weight-input input:focus {
+            outline: none;
+        }
+
+        .custom-weight-hint {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* Выбор типа доставки */
+        .delivery-type-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .delivery-type-btn {
+            flex: 1;
+            padding: 14px 10px;
+            border: 2px solid var(--candy);
+            background: transparent;
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--candy);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delivery-type-btn.selected {
+            background: var(--candy);
+            color: white;
+        }
+
+        .delivery-type-btn:hover:not(.selected) {
+            background: rgba(213, 77, 49, 0.1);
+        }
+
+        .pickup-address {
+            background: var(--gray-light);
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--onyx);
+            display: none;
+        }
+
+        .pickup-address.show {
+            display: block;
+        }
+
+        .pickup-address-icon {
+            margin-right: 8px;
+        }
+
+        /* Корзина */
+        .cart-badge {
+            position: fixed;
+            bottom: 100px;
+            right: 16px;
+            background: var(--candy);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(213, 77, 49, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+
+        .cart-badge.show {
+            display: flex;
+        }
+
+        .cart-badge:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--onyx);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(213, 77, 49, 0.08);
+            border: 1px solid rgba(213, 77, 49, 0.1);
+            position: relative;
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--onyx);
+            flex: 1;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--candy);
+            margin-left: 10px;
+        }
+
+        .cart-item-details {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .cart-item-remove {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .cart-item-remove:hover {
+            color: var(--candy);
+        }
+
+        .add-more-btn {
+            width: 100%;
+            padding: 14px;
+            border: 2px dashed var(--candy);
+            background: transparent;
+            border-radius: 12px;
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--candy);
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .add-more-btn:hover {
+            background: rgba(213, 77, 49, 0.05);
+        }
+
         /* Селект времени */
         .time-select {
             width: 100%;
@@ -683,10 +905,10 @@
                 </div>
             </div>
 
-            <!-- Шаг 3: Форма заказа -->
+            <!-- Шаг 3: Детали товара (вес/декор) -->
             <div id="retail-step3" class="hidden">
                 <button class="back-btn" onclick="retailGoBack(2)">← Назад</button>
-                <h2>Детали заказа</h2>
+                <h2>Детали товара</h2>
 
                 <div class="selected-product-card">
                     <div class="selected-product-name" id="selected-flavor-name">—</div>
@@ -703,6 +925,11 @@
                         <button class="weight-btn" data-weight="2.5" onclick="selectWeight(2.5)">2.5 кг</button>
                         <button class="weight-btn" data-weight="3" onclick="selectWeight(3)">3 кг</button>
                     </div>
+                    <button class="big-size-btn" onclick="toggleBigSize()">🎂 Big size — указать свой вес</button>
+                    <div class="custom-weight-input" id="custom-weight-container">
+                        <input type="number" id="custom-weight" placeholder="Введите вес в кг" step="0.5" min="3.5" oninput="updateCustomWeight()">
+                        <div class="custom-weight-hint">Укажите вес от 3.5 кг и более</div>
+                    </div>
                 </div>
 
                 <!-- Декор -->
@@ -710,6 +937,35 @@
                     <label>Декор / Надпись <span class="required">*</span></label>
                     <textarea id="retail-decor" placeholder="Опишите желаемое оформление, надпись на торте..."></textarea>
                 </div>
+
+                <div class="error-message" id="retail-step3-error">
+                    Укажите вес и декор
+                </div>
+
+                <div class="summary" id="retail-summary">
+                    <div class="summary-row">
+                        <span id="retail-summary-product">—</span>
+                        <span id="retail-summary-weight">—</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Итого:</span>
+                        <span id="retail-total-price">0 ₽</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Шаг 4: Корзина и оформление -->
+            <div id="retail-step4" class="hidden">
+                <button class="back-btn" onclick="retailGoBack(3)">← Назад к товару</button>
+                <h2>Корзина</h2>
+
+                <div id="cart-items-list">
+                    <!-- Товары корзины -->
+                </div>
+
+                <button class="add-more-btn" onclick="addMoreItems()">+ Добавить ещё торт</button>
+
+                <h2>Данные заказа</h2>
 
                 <!-- Дата и время -->
                 <div class="input-group">
@@ -736,10 +992,19 @@
                     </select>
                 </div>
 
-                <!-- Адрес доставки -->
+                <!-- Самовывоз / Доставка -->
                 <div class="input-group">
-                    <label>Адрес доставки <span class="required">*</span></label>
-                    <input type="text" id="retail-address" placeholder="ул. Примерная, д. 1, кв. 10">
+                    <label>Способ получения <span class="required">*</span></label>
+                    <div class="delivery-type-selector">
+                        <button class="delivery-type-btn selected" onclick="selectDeliveryType('pickup')">📍 Самовывоз</button>
+                        <button class="delivery-type-btn" onclick="selectDeliveryType('delivery')">🚗 Доставка</button>
+                    </div>
+                    <div class="pickup-address show" id="pickup-address-block">
+                        <span class="pickup-address-icon">☕</span>
+                        Кофейня tiramiss'u<br>
+                        <strong>Наб. Марка Шагала 1к1</strong>
+                    </div>
+                    <input type="text" id="retail-address" placeholder="ул. Примерная, д. 1, кв. 10" class="hidden">
                 </div>
 
                 <!-- Имя и телефон -->
@@ -762,18 +1027,24 @@
                     Пожалуйста, заполните все обязательные поля
                 </div>
 
-                <div class="summary" id="retail-summary">
+                <div class="summary" id="cart-summary">
                     <div class="summary-row">
-                        <span id="retail-summary-product">—</span>
-                        <span id="retail-summary-weight">—</span>
+                        <span>Товаров в корзине:</span>
+                        <span id="cart-items-count">0</span>
                     </div>
                     <div class="summary-row total">
                         <span>Итого:</span>
-                        <span id="retail-total-price">0 ₽</span>
+                        <span id="cart-total-price">0 ₽</span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Плавающая кнопка корзины -->
+    <div class="cart-badge" id="cart-badge" onclick="goToCart()">
+        🛒
+        <div class="cart-count" id="cart-count">0</div>
     </div>
 
     <script>
@@ -926,15 +1197,24 @@
             { id: 108, name: 'Фисташка малина', price: 2700 }
         ];
 
-        // Состояние розничного заказа
-        const retailOrder = {
+        // Корзина для розничных заказов
+        const cart = [];
+
+        // Текущий редактируемый товар
+        const currentItem = {
             category: null, // 'cake' или 'bento'
             flavor: null,
             weight: 1,
-            decor: '',
+            customWeight: false,
+            decor: ''
+        };
+
+        // Данные заказа (общие для всей корзины)
+        const retailOrder = {
+            deliveryType: 'pickup',
+            address: '',
             date: '',
             time: '',
-            address: '',
             name: '',
             phone: '',
             allergies: ''
@@ -946,7 +1226,11 @@
 
         // Выбор категории
         function selectRetailCategory(category) {
-            retailOrder.category = category;
+            currentItem.category = category;
+            currentItem.flavor = null;
+            currentItem.weight = 1;
+            currentItem.customWeight = false;
+            currentItem.decor = '';
 
             document.getElementById('retail-step1').classList.add('hidden');
             document.getElementById('retail-step2').classList.remove('hidden');
@@ -975,66 +1259,282 @@
 
         // Выбор начинки
         function selectFlavor(flavorId) {
-            const flavors = retailOrder.category === 'cake' ? cakeFlavors : bentoFlavors;
-            retailOrder.flavor = flavors.find(f => f.id === flavorId);
+            const flavors = currentItem.category === 'cake' ? cakeFlavors : bentoFlavors;
+            currentItem.flavor = flavors.find(f => f.id === flavorId);
 
             document.getElementById('retail-step2').classList.add('hidden');
             document.getElementById('retail-step3').classList.remove('hidden');
 
             // Показываем/скрываем выбор веса
             const weightSection = document.getElementById('weight-section');
-            if (retailOrder.category === 'bento') {
+            if (currentItem.category === 'bento') {
                 weightSection.classList.add('hidden');
-                retailOrder.weight = 0.8; // 800г фиксированно
+                currentItem.weight = 0.8; // 800г фиксированно
+                currentItem.customWeight = false;
             } else {
                 weightSection.classList.remove('hidden');
-                retailOrder.weight = 1; // По умолчанию 1 кг
+                currentItem.weight = 1; // По умолчанию 1 кг
+                currentItem.customWeight = false;
                 // Сбрасываем выбор веса
                 document.querySelectorAll('.weight-btn').forEach(btn => btn.classList.remove('selected'));
                 document.querySelector('.weight-btn[data-weight="1"]').classList.add('selected');
+                document.querySelector('.big-size-btn').classList.remove('selected');
+                document.getElementById('custom-weight-container').classList.remove('show');
+                document.getElementById('custom-weight').value = '';
             }
 
-            // Устанавливаем минимальную дату
-            document.getElementById('retail-date').min = retailMinDate.toISOString().split('T')[0];
+            // Сбрасываем поле декора
+            document.getElementById('retail-decor').value = '';
 
             updateRetailSummary();
+            updateMainButton();
         }
 
         // Выбор веса
         function selectWeight(weight) {
-            retailOrder.weight = weight;
+            currentItem.weight = weight;
+            currentItem.customWeight = false;
             document.querySelectorAll('.weight-btn').forEach(btn => btn.classList.remove('selected'));
             document.querySelector(`.weight-btn[data-weight="${weight}"]`).classList.add('selected');
+            document.querySelector('.big-size-btn').classList.remove('selected');
+            document.getElementById('custom-weight-container').classList.remove('show');
+            document.getElementById('custom-weight').value = '';
             updateRetailSummary();
         }
 
-        // Обновление итого для розницы
-        function updateRetailSummary() {
-            if (!retailOrder.flavor) return;
+        // Big size - кастомный вес
+        function toggleBigSize() {
+            const bigSizeBtn = document.querySelector('.big-size-btn');
+            const customContainer = document.getElementById('custom-weight-container');
 
-            const flavorName = retailOrder.flavor.name;
-            const categoryName = retailOrder.category === 'cake' ? 'Торт' : 'Бенто';
+            if (bigSizeBtn.classList.contains('selected')) {
+                // Отключаем big size, возвращаем 1 кг
+                bigSizeBtn.classList.remove('selected');
+                customContainer.classList.remove('show');
+                currentItem.customWeight = false;
+                currentItem.weight = 1;
+                document.querySelector('.weight-btn[data-weight="1"]').classList.add('selected');
+            } else {
+                // Включаем big size
+                document.querySelectorAll('.weight-btn').forEach(btn => btn.classList.remove('selected'));
+                bigSizeBtn.classList.add('selected');
+                customContainer.classList.add('show');
+                currentItem.customWeight = true;
+                currentItem.weight = 0; // пока не указано
+                document.getElementById('custom-weight').focus();
+            }
+            updateRetailSummary();
+        }
+
+        // Обновление кастомного веса
+        function updateCustomWeight() {
+            const input = document.getElementById('custom-weight');
+            const weight = parseFloat(input.value);
+            if (weight >= 3.5) {
+                currentItem.weight = weight;
+                updateRetailSummary();
+            } else {
+                currentItem.weight = 0;
+                updateRetailSummary();
+            }
+        }
+
+        // Выбор типа доставки
+        function selectDeliveryType(type) {
+            retailOrder.deliveryType = type;
+            document.querySelectorAll('.delivery-type-btn').forEach(btn => btn.classList.remove('selected'));
+
+            const pickupBlock = document.getElementById('pickup-address-block');
+            const addressInput = document.getElementById('retail-address');
+
+            if (type === 'pickup') {
+                document.querySelector('.delivery-type-btn:first-child').classList.add('selected');
+                pickupBlock.classList.add('show');
+                addressInput.classList.add('hidden');
+                addressInput.value = 'Самовывоз: Кофейня tiramiss\'u, Наб. Марка Шагала 1к1';
+            } else {
+                document.querySelector('.delivery-type-btn:last-child').classList.add('selected');
+                pickupBlock.classList.remove('show');
+                addressInput.classList.remove('hidden');
+                addressInput.value = '';
+                addressInput.placeholder = 'Введите адрес доставки';
+            }
+        }
+
+        // Обновление итого для текущего товара (шаг 3)
+        function updateRetailSummary() {
+            if (!currentItem.flavor) return;
+
+            const flavorName = currentItem.flavor.name;
+            const categoryName = currentItem.category === 'cake' ? 'Торт' : 'Бенто';
 
             let totalPrice, weightText;
 
-            if (retailOrder.category === 'bento') {
-                totalPrice = retailOrder.flavor.price;
+            if (currentItem.category === 'bento') {
+                totalPrice = currentItem.flavor.price;
                 weightText = '800 гр';
             } else {
-                totalPrice = retailOrder.flavor.price * retailOrder.weight;
-                weightText = `${retailOrder.weight} кг`;
+                totalPrice = currentItem.weight > 0 ? currentItem.flavor.price * currentItem.weight : 0;
+                weightText = currentItem.weight > 0 ? `${currentItem.weight} кг` : '—';
             }
 
             document.getElementById('selected-flavor-name').textContent = `${categoryName}: ${flavorName}`;
-            document.getElementById('selected-flavor-price').textContent = `${totalPrice.toLocaleString('ru-RU')} ₽`;
+            document.getElementById('selected-flavor-price').textContent = totalPrice > 0 ? `${totalPrice.toLocaleString('ru-RU')} ₽` : '—';
 
             document.getElementById('retail-summary-product').textContent = `${categoryName}: ${flavorName}`;
             document.getElementById('retail-summary-weight').textContent = weightText;
-            document.getElementById('retail-total-price').textContent = `${totalPrice.toLocaleString('ru-RU')} ₽`;
+            document.getElementById('retail-total-price').textContent = totalPrice > 0 ? `${totalPrice.toLocaleString('ru-RU')} ₽` : '—';
+        }
 
-            // Показываем кнопку оформления
-            tg.MainButton.text = `Оформить заказ на ${totalPrice.toLocaleString('ru-RU')} ₽`;
-            tg.MainButton.show();
+        // Обновление кнопки MainButton в зависимости от состояния
+        function updateMainButton() {
+            const step3 = document.getElementById('retail-step3');
+            const step4 = document.getElementById('retail-step4');
+
+            if (!step3.classList.contains('hidden')) {
+                // На шаге 3 - добавить в корзину
+                tg.MainButton.text = 'Добавить в корзину';
+                tg.MainButton.show();
+            } else if (!step4.classList.contains('hidden')) {
+                // На шаге 4 - оформить заказ
+                const total = getCartTotal();
+                tg.MainButton.text = `Оформить заказ на ${total.toLocaleString('ru-RU')} ₽`;
+                tg.MainButton.show();
+            } else {
+                tg.MainButton.hide();
+            }
+        }
+
+        // Подсчёт итоговой суммы корзины
+        function getCartTotal() {
+            return cart.reduce((sum, item) => sum + item.price, 0);
+        }
+
+        // Добавление товара в корзину
+        function addToCart() {
+            const decor = document.getElementById('retail-decor').value.trim();
+
+            // Валидация
+            if (currentItem.category === 'cake' && currentItem.weight <= 0) {
+                document.getElementById('retail-step3-error').classList.add('show');
+                return false;
+            }
+            if (!decor) {
+                document.getElementById('retail-step3-error').classList.add('show');
+                document.getElementById('retail-decor').classList.add('error');
+                return false;
+            }
+
+            document.getElementById('retail-step3-error').classList.remove('show');
+            document.getElementById('retail-decor').classList.remove('error');
+
+            // Считаем цену
+            let price, weightText;
+            if (currentItem.category === 'bento') {
+                price = currentItem.flavor.price;
+                weightText = '800 гр';
+            } else {
+                price = currentItem.flavor.price * currentItem.weight;
+                weightText = `${currentItem.weight} кг`;
+            }
+
+            // Добавляем в корзину
+            cart.push({
+                id: Date.now(),
+                category: currentItem.category,
+                categoryName: currentItem.category === 'cake' ? 'Торт' : 'Бенто',
+                flavor: currentItem.flavor.name,
+                weight: currentItem.weight,
+                weightText: weightText,
+                customWeight: currentItem.customWeight,
+                decor: decor,
+                price: price
+            });
+
+            updateCartBadge();
+            return true;
+        }
+
+        // Удаление товара из корзины
+        function removeFromCart(itemId) {
+            const index = cart.findIndex(item => item.id === itemId);
+            if (index > -1) {
+                cart.splice(index, 1);
+            }
+            renderCartItems();
+            updateCartBadge();
+            updateCartSummary();
+
+            // Если корзина пуста - возвращаемся к выбору
+            if (cart.length === 0) {
+                goToStep(1);
+            }
+        }
+
+        // Обновление бейджа корзины
+        function updateCartBadge() {
+            const badge = document.getElementById('cart-badge');
+            const count = document.getElementById('cart-count');
+
+            if (cart.length > 0) {
+                badge.classList.add('show');
+                count.textContent = cart.length;
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+
+        // Рендер товаров в корзине
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-list');
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id})">×</button>
+                    <div class="cart-item-header">
+                        <div class="cart-item-name">${item.categoryName}: ${item.flavor}</div>
+                        <div class="cart-item-price">${item.price.toLocaleString('ru-RU')} ₽</div>
+                    </div>
+                    <div class="cart-item-details">
+                        <div>Вес: ${item.weightText}</div>
+                        <div>Декор: ${item.decor}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Обновление итого корзины
+        function updateCartSummary() {
+            document.getElementById('cart-items-count').textContent = cart.length;
+            document.getElementById('cart-total-price').textContent = `${getCartTotal().toLocaleString('ru-RU')} ₽`;
+        }
+
+        // Переход в корзину
+        function goToCart() {
+            goToStep(4);
+        }
+
+        // Добавить ещё товар
+        function addMoreItems() {
+            goToStep(1);
+        }
+
+        // Переход на шаг
+        function goToStep(step) {
+            document.getElementById('retail-step1').classList.add('hidden');
+            document.getElementById('retail-step2').classList.add('hidden');
+            document.getElementById('retail-step3').classList.add('hidden');
+            document.getElementById('retail-step4').classList.add('hidden');
+
+            document.getElementById(`retail-step${step}`).classList.remove('hidden');
+
+            if (step === 4) {
+                renderCartItems();
+                updateCartSummary();
+                // Устанавливаем минимальную дату
+                document.getElementById('retail-date').min = retailMinDate.toISOString().split('T')[0];
+            }
+
+            updateMainButton();
         }
 
         // Навигация назад
@@ -1042,29 +1542,34 @@
             if (toStep === 1) {
                 document.getElementById('retail-step2').classList.add('hidden');
                 document.getElementById('retail-step1').classList.remove('hidden');
-                retailOrder.category = null;
-                tg.MainButton.hide();
+                currentItem.category = null;
+                updateMainButton();
             } else if (toStep === 2) {
                 document.getElementById('retail-step3').classList.add('hidden');
                 document.getElementById('retail-step2').classList.remove('hidden');
-                retailOrder.flavor = null;
-                tg.MainButton.hide();
+                currentItem.flavor = null;
+                updateMainButton();
+            } else if (toStep === 3) {
+                // Возврат из корзины к последнему товару
+                if (cart.length > 0) {
+                    goToStep(1); // Возвращаемся к выбору категории
+                } else {
+                    goToStep(1);
+                }
             }
         }
 
-        // Валидация розничной формы
+        // Валидация формы корзины (шаг 4)
         function validateRetailForm() {
             let isValid = true;
             const errorMessage = document.getElementById('retail-error-message');
 
             // Сбрасываем ошибки
-            document.querySelectorAll('#retail-step3 .error').forEach(el => el.classList.remove('error'));
+            document.querySelectorAll('#retail-step4 .error').forEach(el => el.classList.remove('error'));
             errorMessage.classList.remove('show');
 
-            // Проверяем декор
-            const decor = document.getElementById('retail-decor');
-            if (!decor.value.trim()) {
-                decor.classList.add('error');
+            // Проверяем что корзина не пуста
+            if (cart.length === 0) {
                 isValid = false;
             }
 
@@ -1082,11 +1587,13 @@
                 isValid = false;
             }
 
-            // Проверяем адрес
-            const address = document.getElementById('retail-address');
-            if (!address.value.trim()) {
-                address.classList.add('error');
-                isValid = false;
+            // Проверяем адрес только для доставки
+            if (retailOrder.deliveryType === 'delivery') {
+                const address = document.getElementById('retail-address');
+                if (!address.value.trim()) {
+                    address.classList.add('error');
+                    isValid = false;
+                }
             }
 
             // Проверяем имя
@@ -1167,39 +1674,48 @@
             const currentSection = getCurrentSection();
 
             if (currentSection === 'retail') {
-                // Розничный заказ
-                if (!validateRetailForm()) {
+                const step3 = document.getElementById('retail-step3');
+                const step4 = document.getElementById('retail-step4');
+
+                if (!step3.classList.contains('hidden')) {
+                    // На шаге 3 - добавляем в корзину и переходим к оформлению
+                    if (addToCart()) {
+                        goToStep(4);
+                    }
                     return;
                 }
 
-                const categoryName = retailOrder.category === 'cake' ? 'Торт на заказ' : 'Бенто торт';
-                let totalPrice, weightText;
+                if (!step4.classList.contains('hidden')) {
+                    // На шаге 4 - оформляем заказ
+                    if (!validateRetailForm()) {
+                        return;
+                    }
 
-                if (retailOrder.category === 'bento') {
-                    totalPrice = retailOrder.flavor.price;
-                    weightText = '800 гр';
-                } else {
-                    totalPrice = retailOrder.flavor.price * retailOrder.weight;
-                    weightText = `${retailOrder.weight} кг`;
+                    const orderData = {
+                        type: 'retail',
+                        user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
+                        items: cart.map(item => ({
+                            category: item.categoryName,
+                            product: item.flavor,
+                            weight: item.weightText,
+                            customWeight: item.customWeight,
+                            decor: item.decor,
+                            price: item.price
+                        })),
+                        totalPrice: getCartTotal(),
+                        date: document.getElementById('retail-date').value,
+                        time: document.getElementById('retail-time').value,
+                        deliveryType: retailOrder.deliveryType,
+                        address: retailOrder.deliveryType === 'pickup'
+                            ? 'Самовывоз: Кофейня tiramiss\'u, Наб. Марка Шагала 1к1'
+                            : document.getElementById('retail-address').value,
+                        customerName: document.getElementById('retail-name').value,
+                        phone: document.getElementById('retail-phone').value,
+                        allergies: document.getElementById('retail-allergies').value
+                    };
+
+                    tg.sendData(JSON.stringify(orderData));
                 }
-
-                const orderData = {
-                    type: 'retail',
-                    category: categoryName,
-                    user: user ? { id: user.id, name: user.first_name, username: user.username } : null,
-                    product: retailOrder.flavor.name,
-                    weight: weightText,
-                    price: totalPrice,
-                    decor: document.getElementById('retail-decor').value,
-                    date: document.getElementById('retail-date').value,
-                    time: document.getElementById('retail-time').value,
-                    address: document.getElementById('retail-address').value,
-                    customerName: document.getElementById('retail-name').value,
-                    phone: document.getElementById('retail-phone').value,
-                    allergies: document.getElementById('retail-allergies').value
-                };
-
-                tg.sendData(JSON.stringify(orderData));
 
             } else {
                 // B2B заказ
