@@ -613,20 +613,19 @@
         /* Корзина */
         .cart-badge {
             position: fixed;
-            bottom: 100px;
+            top: 16px;
             right: 16px;
             background: var(--candy);
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
             box-shadow: 0 4px 12px rgba(213, 77, 49, 0.4);
             cursor: pointer;
-            z-index: 100;
+            z-index: 200;
             transition: transform 0.2s;
         }
 
@@ -638,16 +637,22 @@
             transform: scale(1.1);
         }
 
+        .cart-badge svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+        }
+
         .cart-count {
             position: absolute;
             top: -4px;
             right: -4px;
             background: var(--onyx);
             color: white;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -1044,7 +1049,9 @@
 
     <!-- Плавающая кнопка корзины -->
     <div class="cart-badge" id="cart-badge" onclick="goToCart()">
-        🛒
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.16 14.26l.04-.12.94-1.7h7.45c.75 0 1.41-.41 1.75-1.03l3.24-5.88c.07-.14.12-.29.12-.46 0-.55-.45-1-1-1H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44c-.16.28-.25.61-.25.97 0 1.1.9 2 2 2h12v-2H7.42c-.13 0-.25-.11-.25-.25z"/>
+        </svg>
         <div class="cart-count" id="cart-count">0</div>
     </div>
 
@@ -1476,6 +1483,13 @@
         function updateCartBadge() {
             const badge = document.getElementById('cart-badge');
             const count = document.getElementById('cart-count');
+            const step4 = document.getElementById('retail-step4');
+
+            // Не показываем бейдж если мы уже в корзине (шаг 4)
+            if (!step4.classList.contains('hidden')) {
+                badge.classList.remove('show');
+                return;
+            }
 
             if (cart.length > 0) {
                 badge.classList.add('show');
