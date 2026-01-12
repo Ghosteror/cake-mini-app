@@ -808,12 +808,12 @@
     <div class="container">
         <!-- Выбор типа клиента -->
         <div class="client-type">
-            <button class="client-btn" onclick="switchSection('retail')">Заказ</button>
-            <button class="client-btn active" onclick="switchSection('b2b')">B2B Опт</button>
+            <button class="client-btn active" onclick="switchSection('retail')">Заказ</button>
+            <button class="client-btn" onclick="switchSection('b2b')">B2B Опт</button>
         </div>
 
         <!-- B2B Секция -->
-        <div id="b2b-section" class="section active">
+        <div id="b2b-section" class="section">
             <h2>Оптовый заказ</h2>
             <p class="section-hint">
                 Укажите количество для каждой позиции (кг)
@@ -880,7 +880,7 @@
         </div>
 
         <!-- Розница Секция -->
-        <div id="retail-section" class="section">
+        <div id="retail-section" class="section active">
             <!-- Шаг 1: Выбор категории -->
             <div id="retail-step1">
                 <div class="category-grid">
