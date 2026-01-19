@@ -875,7 +875,7 @@
     <div class="menu-drawer hidden" id="menu-drawer">
         <div class="menu-title">Меню</div>
         <button class="menu-item" onclick="openRetail()">Заказ</button>
-        <button class="menu-item hidden" id="b2b-menu-item" onclick="openB2B()">B2B Опт</button>
+        <button class="menu-item" id="b2b-menu-item" onclick="openB2B()">B2B Опт</button>
     </div>
 
     <div class="container">
@@ -1135,10 +1135,6 @@
         // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
-        // Разрешенные ID для B2B (обновите список при необходимости)
-        const B2B_ALLOWED_IDS = [590685923];
-        const isB2BAllowed = user && B2B_ALLOWED_IDS.includes(user.id);
-
         // Продукты B2B с ценами
         const products = [
             { id: 1, name: 'Медовик', price: 2600 },
@@ -1171,14 +1167,6 @@
         const minDate = new Date();
         minDate.setDate(minDate.getDate() + 2);
         document.getElementById('first-delivery').min = minDate.toISOString().split('T')[0];
-
-        // Управление доступом к B2B
-        const b2bMenuItem = document.getElementById('b2b-menu-item');
-        if (isB2BAllowed) {
-            b2bMenuItem.classList.remove('hidden');
-        } else {
-            document.getElementById('b2b-section').classList.add('hidden');
-        }
 
         // Рендер продуктов
         function renderProducts() {
@@ -1245,7 +1233,7 @@
         function switchSection(section) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
 
-            if (section === 'b2b' && isB2BAllowed) {
+            if (section === 'b2b') {
                 document.getElementById('b2b-section').classList.add('active');
                 updateSummary();
             } else {
@@ -1278,9 +1266,6 @@
         }
 
         function openB2B() {
-            if (!isB2BAllowed) {
-                return;
-            }
             switchSection('b2b');
             toggleMenu(false);
         }
