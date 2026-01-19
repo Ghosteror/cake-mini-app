@@ -65,6 +65,71 @@
             text-transform: lowercase;
         }
 
+        .menu-button {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid var(--candy);
+            color: var(--candy);
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 150;
+        }
+
+        .menu-drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100%;
+            background: var(--sugar);
+            border-right: 2px solid rgba(213, 77, 49, 0.15);
+            padding: 20px 16px;
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-drawer.open {
+            transform: translateX(0);
+        }
+
+        .menu-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--onyx);
+            margin-bottom: 12px;
+        }
+
+        .menu-item {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            border: 2px solid var(--candy);
+            background: white;
+            color: var(--candy);
+            font-weight: 700;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+        }
+
         h2 {
             font-size: 18px;
             font-weight: 700;
@@ -801,17 +866,19 @@
 <body>
     <!-- Шапка -->
     <div class="header">
+        <button class="menu-button" onclick="toggleMenu()">☰</button>
         <div class="logo-text">tiramiss'u</div>
         <div class="tagline">only cake</div>
     </div>
 
-    <div class="container">
-        <!-- Выбор типа клиента -->
-        <div class="client-type">
-            <button class="client-btn active" onclick="switchSection('retail')">Заказ</button>
-            <button class="client-btn" onclick="switchSection('b2b')">B2B Опт</button>
-        </div>
+    <div class="menu-overlay hidden" id="menu-overlay" onclick="toggleMenu(false)"></div>
+    <div class="menu-drawer hidden" id="menu-drawer">
+        <div class="menu-title">Меню</div>
+        <button class="menu-item" onclick="openRetail()">Заказ</button>
+        <button class="menu-item hidden" id="b2b-menu-item" onclick="openB2B()">B2B Опт</button>
+    </div>
 
+    <div class="container">
         <!-- B2B Секция -->
         <div id="b2b-section" class="section">
             <h2>Оптовый заказ</h2>
@@ -1068,6 +1135,10 @@
         // Данные пользователя
         const user = tg.initDataUnsafe?.user;
 
+        // Разрешенные ID для B2B (обновите список при необходимости)
+        const B2B_ALLOWED_IDS = [590685923];
+        const isB2BAllowed = user && B2B_ALLOWED_IDS.includes(user.id);
+
         // Продукты B2B с ценами
         const products = [
             { id: 1, name: 'Медовик', price: 2600 },
@@ -1100,6 +1171,14 @@
         const minDate = new Date();
         minDate.setDate(minDate.getDate() + 2);
         document.getElementById('first-delivery').min = minDate.toISOString().split('T')[0];
+
+        // Управление доступом к B2B
+        const b2bMenuItem = document.getElementById('b2b-menu-item');
+        if (isB2BAllowed) {
+            b2bMenuItem.classList.remove('hidden');
+        } else {
+            document.getElementById('b2b-section').classList.add('hidden');
+        }
 
         // Рендер продуктов
         function renderProducts() {
@@ -1164,18 +1243,46 @@
 
         // Переключение секций
         function switchSection(section) {
-            document.querySelectorAll('.client-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
 
-            if (section === 'b2b') {
-                document.querySelector('.client-btn:last-child').classList.add('active');
+            if (section === 'b2b' && isB2BAllowed) {
                 document.getElementById('b2b-section').classList.add('active');
                 updateSummary();
             } else {
-                document.querySelector('.client-btn:first-child').classList.add('active');
                 document.getElementById('retail-section').classList.add('active');
                 tg.MainButton.hide();
             }
+        }
+
+        function toggleMenu(forceOpen) {
+            const overlay = document.getElementById('menu-overlay');
+            const drawer = document.getElementById('menu-drawer');
+            const shouldOpen = forceOpen !== undefined ? forceOpen : overlay.classList.contains('hidden');
+
+            if (shouldOpen) {
+                overlay.classList.remove('hidden');
+                drawer.classList.remove('hidden');
+                requestAnimationFrame(() => drawer.classList.add('open'));
+            } else {
+                drawer.classList.remove('open');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    drawer.classList.add('hidden');
+                }, 200);
+            }
+        }
+
+        function openRetail() {
+            switchSection('retail');
+            toggleMenu(false);
+        }
+
+        function openB2B() {
+            if (!isB2BAllowed) {
+                return;
+            }
+            switchSection('b2b');
+            toggleMenu(false);
         }
 
         // === РОЗНИЧНАЯ ФОРМА ===
