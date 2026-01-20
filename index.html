@@ -1298,29 +1298,43 @@
 
         // === РОЗНИЧНАЯ ФОРМА ===
 
+        // SVG иконки для начинок
+        const flavorIcons = {
+            medovik: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="honey" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FDB44B;stop-opacity:1" /><stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#honey)"/><path d="M30,40 Q50,30 70,40 L70,60 Q50,70 30,60 Z" fill="#FEF3C7" opacity="0.8"/><path d="M35,50 L65,50 M35,55 L65,55 M35,45 L65,45" stroke="#F59E0B" stroke-width="2"/></svg>`,
+            snickers: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="chocolate" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#78350F;stop-opacity:1" /><stop offset="100%" style="stop-color:#451A03;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#chocolate)"/><circle cx="40" cy="40" r="8" fill="#D97706" opacity="0.9"/><circle cx="60" cy="45" r="6" fill="#D97706" opacity="0.9"/><circle cx="50" cy="60" r="7" fill="#D97706" opacity="0.9"/></svg>`,
+            chocolate3: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="choc3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#3B1810;stop-opacity:1" /><stop offset="50%" style="stop-color:#6B3410;stop-opacity:1" /><stop offset="100%" style="stop-color:#92400E;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#choc3)"/><path d="M25,35 L75,35 L75,50 L25,50 Z" fill="#78350F" opacity="0.7"/><path d="M25,55 L75,55 L75,70 L25,70 Z" fill="#451A03" opacity="0.7"/></svg>`,
+            milkgirl: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="milk" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FEFCE8;stop-opacity:1" /><stop offset="100%" style="stop-color:#FEF3C7;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#milk)"/><circle cx="50" cy="50" r="35" fill="#F59E0B" opacity="0.3"/><circle cx="50" cy="45" r="20" fill="#FFFFFF" opacity="0.8"/></svg>`,
+            rafaello: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="white"><stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" /><stop offset="100%" style="stop-color:#F5F5F5;stop-opacity:1" /></radialGradient></defs><circle cx="50" cy="50" r="45" fill="url(#white)"/><circle cx="50" cy="50" r="38" fill="#FEF3C7" opacity="0.5"/><circle cx="45" cy="45" r="4" fill="#D4D4D4"/><circle cx="55" cy="48" r="3" fill="#D4D4D4"/><circle cx="50" cy="55" r="3" fill="#D4D4D4"/></svg>`,
+            currant: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="berry" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#581C87;stop-opacity:1" /><stop offset="100%" style="stop-color:#3B0764;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#berry)"/><circle cx="40" cy="40" r="10" fill="#6B21A8" opacity="0.8"/><circle cx="60" cy="45" r="8" fill="#6B21A8" opacity="0.8"/><circle cx="50" cy="60" r="9" fill="#6B21A8" opacity="0.8"/></svg>`,
+            strawberry: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="strawb" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FCA5A5;stop-opacity:1" /><stop offset="100%" style="stop-color:#F87171;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#strawb)"/><circle cx="45" cy="45" r="3" fill="#FECACA"/><circle cx="55" cy="48" r="3" fill="#FECACA"/><circle cx="50" cy="55" r="3" fill="#FECACA"/><circle cx="42" cy="52" r="2" fill="#FECACA"/><circle cx="58" cy="54" r="2" fill="#FECACA"/></svg>`,
+            pistachio: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="pist" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#86EFAC;stop-opacity:1" /><stop offset="100%" style="stop-color:#4ADE80;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#pist)"/><path d="M50,30 Q60,40 50,50 Q40,40 50,30" fill="#BBF7D0" opacity="0.7"/><path d="M50,50 Q60,60 50,70 Q40,60 50,50" fill="#BBF7D0" opacity="0.7"/></svg>`,
+            napoleon: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="nap" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FEF9C3;stop-opacity:1" /><stop offset="100%" style="stop-color:#FDE68A;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#nap)"/><rect x="25" y="35" width="50" height="6" fill="#FBBF24" opacity="0.6"/><rect x="25" y="47" width="50" height="6" fill="#FBBF24" opacity="0.6"/><rect x="25" y="59" width="50" height="6" fill="#FBBF24" opacity="0.6"/></svg>`,
+            cherry: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="cherry" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" /><stop offset="100%" style="stop-color:#991B1B;stop-opacity:1" /></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#cherry)"/><circle cx="42" cy="48" r="12" fill="#EF4444" opacity="0.8"/><circle cx="58" cy="48" r="12" fill="#EF4444" opacity="0.8"/><path d="M42,36 Q45,25 50,30 Q55,25 58,36" stroke="#15803D" stroke-width="2" fill="none"/></svg>`
+        };
+
         // Торты на заказ (цена за 1 кг)
         const cakeFlavors = [
-            { id: 1, name: 'Медовик', price: 4200, emoji: '🍯' },
-            { id: 2, name: 'Сникерс', price: 4200, emoji: '🥜' },
-            { id: 3, name: 'Три шоколада', price: 4200, emoji: '🍫' },
-            { id: 4, name: 'Молочная девочка', price: 4200, emoji: '🥛' },
-            { id: 5, name: 'Рафаэлло', price: 4500, emoji: '🥥' },
-            { id: 6, name: 'Чёрная смородина шоколад', price: 4500, emoji: '🫐' },
-            { id: 7, name: 'Ягода ваниль', price: 4200, emoji: '🍓' },
-            { id: 8, name: 'Фисташка малина', price: 4500, emoji: '💚' },
-            { id: 9, name: 'Наполеон', price: 3500, emoji: '🧈' }
+            { id: 1, name: 'Медовик', price: 4200, icon: flavorIcons.medovik },
+            { id: 2, name: 'Сникерс', price: 4200, icon: flavorIcons.snickers },
+            { id: 3, name: 'Три шоколада', price: 4200, icon: flavorIcons.chocolate3 },
+            { id: 4, name: 'Молочная девочка', price: 4200, icon: flavorIcons.milkgirl },
+            { id: 5, name: 'Рафаэлло', price: 4500, icon: flavorIcons.rafaello },
+            { id: 6, name: 'Чёрная смородина шоколад', price: 4500, icon: flavorIcons.currant },
+            { id: 7, name: 'Ягода ваниль', price: 4200, icon: flavorIcons.strawberry },
+            { id: 8, name: 'Фисташка малина', price: 4500, icon: flavorIcons.pistachio },
+            { id: 9, name: 'Наполеон', price: 3500, icon: flavorIcons.napoleon }
         ];
 
         // Бенто торты (800г, фиксированная цена)
         const bentoFlavors = [
-            { id: 101, name: 'Медовик', price: 2500, emoji: '🍯' },
-            { id: 102, name: 'Сникерс', price: 2500, emoji: '🥜' },
-            { id: 103, name: 'Три шоколада', price: 2500, emoji: '🍫' },
-            { id: 104, name: 'Молочная девочка', price: 2500, emoji: '🥛' },
-            { id: 105, name: 'Рафаэлло', price: 2700, emoji: '🥥' },
-            { id: 106, name: 'Шоколад-вишня', price: 2700, emoji: '🍒' },
-            { id: 107, name: 'Ягода ваниль', price: 2500, emoji: '🍓' },
-            { id: 108, name: 'Фисташка малина', price: 2700, emoji: '💚' }
+            { id: 101, name: 'Медовик', price: 2500, icon: flavorIcons.medovik },
+            { id: 102, name: 'Сникерс', price: 2500, icon: flavorIcons.snickers },
+            { id: 103, name: 'Три шоколада', price: 2500, icon: flavorIcons.chocolate3 },
+            { id: 104, name: 'Молочная девочка', price: 2500, icon: flavorIcons.milkgirl },
+            { id: 105, name: 'Рафаэлло', price: 2700, icon: flavorIcons.rafaello },
+            { id: 106, name: 'Шоколад-вишня', price: 2700, icon: flavorIcons.cherry },
+            { id: 107, name: 'Ягода ваниль', price: 2500, icon: flavorIcons.strawberry },
+            { id: 108, name: 'Фисташка малина', price: 2700, icon: flavorIcons.pistachio }
         ];
 
         // Корзина для розничных заказов
@@ -1381,7 +1395,7 @@
 
             container.innerHTML = flavors.map(f => `
                 <div class="flavor-card" onclick="selectFlavor(${f.id})">
-                    <div class="flavor-image">${f.emoji}</div>
+                    <div class="flavor-image">${f.icon}</div>
                     <div class="flavor-info">
                         <div class="flavor-name">${f.name}</div>
                         <div class="flavor-price">${f.price.toLocaleString('ru-RU')} ₽${priceLabel}</div>
